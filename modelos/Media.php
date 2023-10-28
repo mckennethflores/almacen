@@ -7,15 +7,15 @@ class Media
     {
 
     }
-    public function insertar($nom_med,$tipo_med)
+    public function insertar($nom_med,$des_med,$tipo_med)
     {
-        $sql = "INSERT INTO media (nom_med, tipo_med,con_med)
-        VALUES ('$nom_med', '$tipo_med', '1')";
+        $sql = "INSERT INTO media (nom_med, des_med, tipo_med,con_med)
+        VALUES ('$nom_med', '$des_med', '$tipo_med', '1')";
         return ejecutarConsulta($sql);
     }
-    public function editar($idmed,$nom_med,$tipo_med)
+    public function editar($idmed,$nom_med,$des_med,$tipo_med)
     {
-        $sql ="UPDATE media SET nom_med='$nom_med',tipo_med='$tipo_med' WHERE idmed ='$idmed'";
+        $sql ="UPDATE media SET nom_med='$nom_med',des_med='$des_med',tipo_med='$tipo_med' WHERE idmed ='$idmed'";
         return ejecutarConsulta($sql);
     }
  
@@ -35,20 +35,20 @@ class Media
 
     public function mostrar($idmed)
     {
-        $sql = "SELECT idmed AS idmedia, nom_med AS nombre, tipo_med AS tipo, con_med AS condicion FROM media WHERE idmed='$idmed'";
+        $sql = "SELECT idmed AS idmedia, nom_med AS cod_img, des_med AS imagen, tipo_med AS tipo, con_med AS condicion FROM media WHERE idmed='$idmed'";
         
         return ejecutarConsultaSimpleFila($sql);
     }
 
     public function listar()
     {
-        $sql = "SELECT idmed AS idmedia, nom_med AS nombre, tipo_med AS tipo, con_med AS condicion FROM media";
+        $sql = "SELECT idmed AS idmedia, nom_med AS cod_img, des_med AS imagen, tipo_med AS tipo, con_med AS condicion FROM media";
         return ejecutarConsulta($sql);
     }
     //funcion que muestra en el selec todos los registros 
     public function select()
     {
-        $sql = "SELECT idmed AS idmedia, nom_med AS nombre, tipo_med AS tipo, con_med AS condicion FROM media where condicion=1";
+        $sql = "SELECT idmed AS idmedia, nom_med AS cod_img, des_med AS imagen, tipo_med AS tipo, con_med AS condicion FROM media where condicion=1";
         return ejecutarConsulta($sql);
     }
 }

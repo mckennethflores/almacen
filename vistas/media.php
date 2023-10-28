@@ -23,7 +23,7 @@ require_once("header.php");
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Categoría <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                          <h1 class="box-title">Media <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
@@ -34,7 +34,7 @@ require_once("header.php");
                           <thead>
                             <th>Opciones</th>
                             <th>Nombre</th>
-                            <th>Descripción</th>
+                            <th>Tipo</th>
                             <th>Estado</th>
                           </thead>
                           <tbody>                            
@@ -42,7 +42,7 @@ require_once("header.php");
                           <tfoot>
                             <th>Opciones</th>
                             <th>Nombre</th>
-                            <th>Descripción</th>
+                            <th>Tipo</th>
                             <th>Estado</th>
                           </tfoot>
                         </table>
@@ -50,14 +50,21 @@ require_once("header.php");
                     <div class="panel-body" style="height: 400px;" id="formularioregistros">
                         <form name="formulario" id="formulario" method="POST">
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Nombre:</label>
-                            <input type="hidden" name="idcategoria" id="idcategoria">
-                            <input type="text" class="text-uppercase form-control" name="nombre" id="nombre" maxlength="55" placeholder="Nombre" required>
+                          <label>Imagen:</label>
+                            <input type="file" class="form-control" name="imagen" id="imagen">
+                            <input type="hidden" name="imagenactual" id="imagenactual" src="" alt="">
+                            <img src="" width="450" height="250" alt="" id="imagenmuestra">
+                           <!--  <label>Nombre:</label> -->
+                            <input type="hidden" name="idmedia" id="idmedia">
+                           <!--  <input type="text" class="form-control" name="nombre" id="nombre" maxlength="55" placeholder="Nombre" required> -->
                           </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Descripción:</label>
-                            <input type="text" class="text-uppercase form-control" name="descripcion" id="descripcion" maxlength="255" placeholder="Descripción">
-                          </div>
+                          <!-- <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Tipo:</label>
+                            <input type="text" class="form-control" name="tipo" id="tipo" maxlength="255" placeholder="Descripción">
+                          </div> -->
+                       <!--    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                           
+                          </div> -->
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
 
@@ -81,7 +88,7 @@ else
 } */
 require_once("footer.php");
 ?>
-<script type="text/javascript" src="scripts/categoria.js"></script>
+<script type="text/javascript" src="scripts/media.js"></script>
 <?php
 }
 ob_end_flush();

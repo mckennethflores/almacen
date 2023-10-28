@@ -132,6 +132,7 @@ if (strlen(session_id()) < 1)
               </a>
               <ul class="treeview-menu">
                 <li><a href="categoria.php"><i class="fa fa-circle-o"></i> Categorías</a></li>
+                <li><a href="media.php"><i class="fa fa-circle-o"></i> Media</a></li>
 <!--                 <li><a href="cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
                 <li><a href="articulo.php"><i class="fa fa-circle-o"></i> Artículos</a></li>
                 <li><a href="unidadmedida.php"><i class="fa fa-circle-o"></i> Unidad Medida</a></li> -->
