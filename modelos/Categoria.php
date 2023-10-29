@@ -48,7 +48,7 @@ class Categoria
     //funcion que muestra en el selec todos los registros 
     public function select()
     {
-        $sql = "SELECT idcat AS idcategoria, nom_cat AS nombre, des_cat AS descripcion ,con_cat AS condicion FROM categoria where condicion=1";
+        $sql = "SELECT idcat AS idcategoria, nom_cat AS nombre, des_cat AS descripcion ,con_cat AS condicion FROM categoria where con_cat=1";
         return ejecutarConsulta($sql);
     }
 }

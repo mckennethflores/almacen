@@ -48,7 +48,7 @@ class Media
     //funcion que muestra en el selec todos los registros 
     public function select()
     {
-        $sql = "SELECT idmed AS idmedia, nom_med AS cod_img, des_med AS imagen, tipo_med AS tipo, con_med AS condicion FROM media where condicion=1";
+        $sql = "SELECT idmed AS idmedia, nom_med AS cod_img, des_med AS imagen, tipo_med AS tipo, con_med AS condicion FROM media where con_med=1";
         return ejecutarConsulta($sql);
     }
 }
