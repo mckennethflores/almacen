@@ -28,7 +28,7 @@ function limpiar()
 	$("#categoriaid").val("");
 	$("#mediaid").val("");
 	$("#nom_pro").val("");
-    $("#can_pro").val("");
+    $("#stock_pro").val("");
 	$("#pre_com_pro").val("");
 	$("#pre_ven_pro").attr("src","");
 	$("#fec_pro").val("");
@@ -129,7 +129,7 @@ function mostrar(idpro)
 		$("#medidaid").val(data.medidaid);
 	    $('#medidaid').selectpicker('refresh');
         $("#nom_pro").val(data.nom_pro);
-        $("#can_pro").val(data.can_pro);
+        $("#stock_pro").val(data.stock_pro);
         $("#pre_com_pro").val(data.pre_com_pro);
 		$("#pre_ven_pro").val(data.pre_ven_pro);
 		 

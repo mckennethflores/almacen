@@ -9,9 +9,11 @@ else
 {
 require_once("header.php");
 
-if ($_SESSION['almacen']==1)
-{
+/* if ($_SESSION['almacen']==1)
+{ */
 ?>
+
+
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">        
@@ -76,7 +78,7 @@ if ($_SESSION['almacen']==1)
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Cantidad(*):</label>
-                            <input type="decimal" class="form-control" name="can_pro" id="can_pro" required>
+                            <input type="decimal" class="form-control" name="stock_pro" id="stock_pro" required>
                           </div>                         
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Precio Compra:</label>
@@ -109,11 +111,11 @@ if ($_SESSION['almacen']==1)
   <!--Fin-Contenido-->
 
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>
