@@ -13,6 +13,7 @@ require_once("header.php");
 { */
 ?>
 
+
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">        
@@ -22,7 +23,7 @@ require_once("header.php");
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Producto <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                          <h1 class="box-title">Movimiento <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
                            <!-- <a class="btn btn-warning" target="_blank" href="../reportes/rptarticulos.php"> Reporte Articulos </a> -->
                         <div class="box-tools pull-right">
                         </div>
@@ -32,61 +33,51 @@ require_once("header.php");
                     <div class="panel-body table-responsive" id="listadoregistros">
                         <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                           <thead>
-                          
-                            <th>codigobarras</th>
-                            <th>estado</th>
-                            <th>categoria</th>
+                            <th>Opciones</th>
+                            <th>Producto</th>
+                            <th>Usuario</th>
+                            <th>tipo</th>
+                            <th>Cant.</th>
+                            <th>precio</th>
+                            <th>Fecha</th>
                           </thead>
                           <tbody>                            
                           </tbody>
                           <tfoot>
-                            <th>codigobarras</th>
-                            <th>estado</th>
-                            <th>categoria</th>
-<!--                             <th>Opciones</th>
-                            <th>Nombre</th>
-                            <th>Categoría</th>
-                            <th>Imagen</th>
+                            <th>Opciones</th>
+                            <th>Producto</th>
+                            <th>Usuario</th>
+                            <th>tipo</th>
                             <th>Cant.</th>
-                            <th>P.C.</th>
-                            <th>P.V.</th>                            
-                            <th>Estado</th> -->
+                            <th>precio</th>
+                            <th>Fecha</th>
                           </tfoot>
                         </table>
                     </div>
                     <div class="panel-body" id="formularioregistros">
                         <form name="formulario" id="formulario" method="POST">
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Nombre(*):</label>
-                            <input type="hidden" name="idpro" id="idpro">
-                            <input type="text" class="form-control" name="nom_pro" id="nom_pro" maxlength="250" placeholder="Nombre" required>
+                            <label>Seleccione Producto(*):</label>
+                            <input type="hidden" name="idmov" id="idmov">
+                            <select id="productoid" name="productoid" class="form-control selectpicker" data-live-search="true" required></select>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Categoría(*):</label>
-                            <select id="categoriaid" name="categoriaid" class="form-control selectpicker" data-live-search="true" required></select>
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Media(*):</label>
-                            <select id="mediaid" name="mediaid" class="form-control selectpicker" data-live-search="true" required></select>
+                            <label>Tipo de movimiento(*):</label>
+                            <select id="tipomovimientoid" name="tipomovimientoid" class="form-control selectpicker" data-live-search="true" required></select>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Cantidad(*):</label>
-                            <input type="decimal" class="form-control" name="stock_pro" id="stock_pro" required>
+                            <input type="decimal" class="form-control" name="cantidad" id="cantidad" required>
                           </div>                         
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Precio Compra:</label>
-                            <input type="text" class="form-control" name="pre_com_pro" id="pre_com_pro" maxlength="255" placeholder="S/">
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Precio Venta:</label>
-                            <input type="text" class="form-control" name="pre_ven_pro" id="pre_ven_pro" maxlength="255" placeholder="S/">
+                            <label>Precio:</label>
+                            <input type="text" class="form-control" name="precio" id="precio" maxlength="255" placeholder="S/">
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Fecha:</label>
-                            <input type="datetime" class="form-control" name="fec_pro" id="fec_pro" >
+                            <input type="datetime" class="form-control" name="fecha" id="fecha" >
                           </div>
                           
-                           
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
 
@@ -113,7 +104,7 @@ require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>
 <script type="text/javascript" src="../public/js/jquery.PrintArea.js "></script>
-<script type="text/javascript" src="scripts/producto.js"></script>
+<script type="text/javascript" src="scripts/movimiento.js"></script>
 <?php
 }
 ob_end_flush();

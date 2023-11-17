@@ -46,7 +46,7 @@ switch($_GET["op"]){
         $rspta=$producto->mostrar($idpro);
         echo json_encode($rspta);
     break;
-    case 'listar':
+/*     case 'listar':
         $rspta=$producto->listar();
         $data = Array();
         while ($reg=$rspta->fetch_object()){
@@ -63,8 +63,8 @@ switch($_GET["op"]){
             "iTotalDisplayRecords"=>count($data),
             "aaData"=>$data);
         echo json_encode($results);
-    break;
-/*     case 'listar':
+    break; */
+    case 'listar':
         $rspta=$producto->listar();
         $data = Array();
         while ($reg=$rspta->fetch_object()){
@@ -91,7 +91,7 @@ switch($_GET["op"]){
             "iTotalDisplayRecords"=>count($data),
             "aaData"=>$data);
         echo json_encode($results);
-    break; */
+    break;
     case "selectCategoria":
         require_once "../modelos/Categoria.php";
         $categoria = new Categoria();

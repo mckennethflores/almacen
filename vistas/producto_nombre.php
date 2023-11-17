@@ -33,24 +33,29 @@ require_once("header.php");
                         <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                           <thead>
                           
-                            <th>codigobarras</th>
-                            <th>estado</th>
-                            <th>categoria</th>
-                          </thead>
-                          <tbody>                            
-                          </tbody>
-                          <tfoot>
-                            <th>codigobarras</th>
-                            <th>estado</th>
-                            <th>categoria</th>
-<!--                             <th>Opciones</th>
+                          <th>Opciones</th>
                             <th>Nombre</th>
                             <th>Categoría</th>
                             <th>Imagen</th>
                             <th>Cant.</th>
                             <th>P.C.</th>
                             <th>P.V.</th>                            
-                            <th>Estado</th> -->
+                            <th>Estado</th>
+                          </thead>
+                          <tbody>                            
+                          </tbody>
+                          <tfoot>
+<!--                             <th>codigobarras</th>
+                            <th>estado</th>
+                            <th>categoria</th> -->
+                            <th>Opciones</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Imagen</th>
+                            <th>Cant.</th>
+                            <th>P.C.</th>
+                            <th>P.V.</th>                            
+                            <th>Estado</th>
                           </tfoot>
                         </table>
                     </div>
@@ -113,7 +118,7 @@ require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>
 <script type="text/javascript" src="../public/js/jquery.PrintArea.js "></script>
-<script type="text/javascript" src="scripts/producto.js"></script>
+<script type="text/javascript" src="scripts/producto_nombre.js"></script>
 <?php
 }
 ob_end_flush();
