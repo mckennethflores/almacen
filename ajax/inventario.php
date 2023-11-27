@@ -1,5 +1,5 @@
 <?php
-require_once "../modelos/Producto.php";
+require_once "../modelos/Inventario.php";
 
 $inventario = new Inventario();
 // condicion de una sola linea
@@ -46,9 +46,31 @@ switch($_GET["op"]){
         $data = Array();
         while ($reg=$rspta->fetch_object()){
             $data[]=array(
-                "0"=>$reg->codigobarras,
-                "1"=>$reg->est_pro,
-                "2"=>$reg->categoria
+                "0"=>$reg->idinventario,
+                "1"=>$reg->productoid,
+                "2"=>$reg->fecha,
+                "3"=>$reg->cantidad,
+                "4"=>$reg->estado
+            );
+            
+        }
+        $results= array(
+            "sEcho"=>1, //info para datatables
+            "iTotalRecords"=>count($data),
+            "iTotalDisplayRecords"=>count($data),
+            "aaData"=>$data);
+        echo json_encode($results);
+    break;
+    case 'rpt_exactitud':
+        $rspta=$inventario->rpt_exactitud();
+        $data = Array();
+        while ($reg=$rspta->fetch_object()){
+            $data[]=array(
+                "0"=>$reg->idproducto,
+                "1"=>$reg->nombre_producto,
+                "2"=>$reg->cantidad_stock_sistema,
+                "3"=>$reg->cantidad_stock_fisico,
+                "4"=>"% ".$reg->exactitud
             );
             
         }

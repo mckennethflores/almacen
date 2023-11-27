@@ -85,7 +85,7 @@ if (strlen(session_id()) < 1)
                   </li>
 
                       <script src="../public/js/jquery-3.1.1.min.js"></script>
-                      <script type="text/javascript" src="scripts/usuario_edit.js"></script>
+        <!--               <script type="text/javascript" src="scripts/usuario_edit.js"></script> -->
  
                   <!-- Menu Footer-->
                   <li class="user-footer">
@@ -163,8 +163,9 @@ if (strlen(session_id()) < 1)
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="reportes.php"><i class="fa fa-circle-o"></i>Reportes</a></li>
-                <li><a href="stockdeproductos.php"><i class="fa fa-circle-o"></i>Stock de productos</a></li>
+                <li><a href="reporte_general.php"><i class="fa fa-circle-o"></i>Reporte General</a></li>
+                <li><a href="reporte_stock_productos.php"><i class="fa fa-circle-o"></i>Stock de productos</a></li>
+                <li><a href="reporte_exactitud.php"><i class="fa fa-circle-o"></i>Reporte de Exactitud</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -175,6 +176,7 @@ if (strlen(session_id()) < 1)
               </a>
               <ul class="treeview-menu">
                 <li><a href="reportes.php"><i class="fa fa-circle-o"></i>Inventario Productos</a></li>
+                <li><a href="inventario.php"><i class="fa fa-circle-o"></i>Inventario</a></li>
            
               </ul>
             </li>

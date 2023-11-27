@@ -53,23 +53,19 @@ class Inventario
         $sql = "SELECT * FROM `inventariofisico`";
         return ejecutarConsulta($sql);
     }
-  /*   // REGISTROS ACTIVOS
-    public function listarProductosParaProductoNombre()
+
+    public function rpt_exactitud()
     {
-        $sql = "SELECT a.idpro,a.categoriaid,a.nom_pro as nombre,m.nom_med,m.nom_med as media, a.codigobarras,c.nom_cat as categoria,a.nom_pro,a.stock_pro,a.pre_com_pro,a.pre_ven_pro,a.fec_pro, a.est_pro FROM producto a INNER JOIN categoria c ON a.categoriaid=c.idcat INNER JOIN media m ON a.mediaid=m.idmed ORDER BY a.idpro DESC;";
+        $sql = "SELECT
+        producto.idpro AS idproducto,producto.nom_pro AS nombre_producto,
+        producto.stock_pro as cantidad_stock_sistema,
+        
+        inventariofisico.cantidad as cantidad_stock_fisico,
+        (inventariofisico.cantidad / producto.stock_pro * 100) AS 'exactitud'
+        FROM
+        inventariofisico
+        INNER JOIN producto ON producto.idpro = inventariofisico.productoid";
         return ejecutarConsulta($sql);
     }
-    public function listarActivosVenta()
-    {
-        $sql="SELECT a.idpro,a.categoriaid,m.nom_med,m.des_med as media,c.nom_cat as categoria,a.nom_pro,a.stock_pro,a.pre_com_pro,a.pre_ven_pro,a.fec_pro, a.est_pro FROM producto a INNER JOIN categoria c ON a.categoriaid=c.idcat INNER JOIN media m ON a.mediaid=m.idmed WHERE a.est_pro='1';";
-        return ejecutarConsulta($sql); 
-    }
-
-        public function selectarticulo()
-    {
-        $sql="SELECT * FROM producto";
-        return ejecutarConsulta($sql); 
-    } */
-
 }
 ?>

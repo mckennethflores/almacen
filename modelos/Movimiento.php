@@ -15,7 +15,7 @@ class Movimiento
     public function insertar($productoid,$tipomovimientoid,$cantidad,$precio,$fecha)
     {
         $sql = "INSERT INTO `movimiento` (`idmov`, `productoid`, `usuarioid`, `tipomovimientoid`, `cantidad`, `precio`, `fecha`) VALUES (NULL, '$productoid', $this->idUsuarioSesion, '$tipomovimientoid', '$cantidad', '$precio', '$fecha');";
-    //  echo $sql;
+      
       return ejecutarConsulta($sql);
 
     }
