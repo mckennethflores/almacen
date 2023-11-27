@@ -78,7 +78,7 @@ if (strlen(session_id()) < 1)
                   <li class="user-header">
                     <img src="../files/usuarios/<?php echo $_SESSION['imagen']; ?>" class="img-circle" alt="User Image">
                     <p>
-                    NOmbre: <?php echo $_SESSION['nombre']; ?> <br>
+                    Nombre: <?php echo $_SESSION['nombre']; ?> <br>
                    <!--  Cargo: --> <?php /* echo $_SESSION['cargo']; */ ?>
                     
                    </p>
@@ -127,16 +127,13 @@ if (strlen(session_id()) < 1)
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>
-                <span>Almacén</span>
+                <span>Maestro</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="categoria.php"><i class="fa fa-circle-o"></i> Categorías</a></li>
                 <li><a href="media.php"><i class="fa fa-circle-o"></i> Media</a></li>
                 <li><a href="producto_nombre.php"><i class="fa fa-circle-o"></i> Productos</a></li>
-<!--                 <li><a href="cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
-                
-                <li><a href="unidadmedida.php"><i class="fa fa-circle-o"></i> Unidad Medida</a></li> -->
               </ul>
             </li>
             <li class="treeview">
@@ -146,11 +143,9 @@ if (strlen(session_id()) < 1)
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-              <li><a href="movimiento.php"><i class="fa fa-circle-o"></i> Movimiento</a></li>
-            
+                <li><a href="movimiento.php"><i class="fa fa-circle-o"></i> Movimiento</a></li>
               </ul>
             </li>
-
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>
@@ -158,8 +153,29 @@ if (strlen(session_id()) < 1)
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-              <li><a href="producto.php"><i class="fa fa-circle-o"></i> Productos con codigo de barras</a></li>
-            
+                <li><a href="producto.php"><i class="fa fa-circle-o"></i> Productos con codigo de barras</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a id="mReportes" href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Reportes</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="reportes.php"><i class="fa fa-circle-o"></i>Reportes</a></li>
+                <li><a href="stockdeproductos.php"><i class="fa fa-circle-o"></i>Stock de productos</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a id="mReportes" href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Inventario</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="reportes.php"><i class="fa fa-circle-o"></i>Inventario Productos</a></li>
+           
               </ul>
             </li>
             <?php

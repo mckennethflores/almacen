@@ -92,6 +92,35 @@ switch($_GET["op"]){
             "aaData"=>$data);
         echo json_encode($results);
     break;
+    case 'listarProductosParaProductoNombre':
+        $rspta=$producto->listarProductosParaProductoNombre();
+        $data = Array();
+        while ($reg=$rspta->fetch_object()){
+            $data[]=array(
+                "0"=>($reg->est_pro)?'<button class="btn btn-warning" onclick="mostrar('.$reg->idpro.')"><i class="fa fa-eye"></i></button>'.
+                ' <button class="btn btn-alert" onclick="desactivar('.$reg->idpro.')"><i class="fa fa-close"></i></button>'.
+                ' <button class="btn btn-danger" onclick="eliminar('.$reg->idpro.')"><i class="fa fa-close"></i></button>':
+                '<button class="btn btn-warning" onclick="mostrar('.$reg->idpro.')"><i class="fa fa-eye"></i></button>'.
+                ' <button class="btn btn-primary" onclick="activar('.$reg->idpro.')"><i class="fa fa-check"></i></button>'.
+                ' <button class="btn btn-danger" onclick="eliminar('.$reg->idpro.')"><i class="fa fa-close"></i></button>',
+                "1"=>$reg->nombre,
+                "2"=>$reg->categoria,
+                "3"=>'<img width="50" height="50" src="../files/media/'.$reg->media.'">',
+                "4"=>$reg->stock_pro,
+                "5"=>$reg->pre_com_pro,
+                "6"=>$reg->pre_ven_pro,
+                "7"=>$reg->codigobarras,
+                "8"=>($reg->est_pro)?'<span class="label bg-green">Activado</span>':'<span class="label bg-red">Desactivado</span>'
+            );
+
+        }
+        $results= array(
+            "sEcho"=>1, //info para datatables
+            "iTotalRecords"=>count($data),
+            "iTotalDisplayRecords"=>count($data),
+            "aaData"=>$data);
+        echo json_encode($results);
+    break;
     case "selectCategoria":
         require_once "../modelos/Categoria.php";
         $categoria = new Categoria();

@@ -1,59 +1,59 @@
 <?php
 require_once "../config/Conexion.php";
 
-class Producto
+class Inventario
 {
     public function __construct()
     {
 
     }
     
-    public function insertar($categoriaid,$mediaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro)
+    public function insertar($productoid,$fecha,$cantidad)
     {
-        $sql = "INSERT INTO producto (categoriaid,mediaid,nom_pro,stock_pro,pre_com_pro,pre_ven_pro,fec_pro,est_pro)
-        VALUES ('$categoriaid','$mediaid','$nom_pro','$stock_pro', '$pre_com_pro','$pre_ven_pro','$fec_pro', '1')";
+        $sql = "INSERT INTO `inventariofisico` (`idinventario`, `productoid`, `fecha`, `cantidad`) VALUES (NULL, '$productoid', '$fecha', '$cantidad');";
+      /*   $sql = "INSERT INTO producto (categoriaid,mediaid,nom_pro,stock_pro,pre_com_pro,pre_ven_pro,fec_pro,est_pro)
+        VALUES ('$categoriaid','$mediaid','$nom_pro','$stock_pro', '$pre_com_pro','$pre_ven_pro','$fec_pro', '1')"; */
     //  echo $sql;
       return ejecutarConsulta($sql);
 
     }
-    public function editar($idpro,$categoriaid,$mediaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro)
+    public function editar($idinventario,$productoid,$fecha,$cantidad)
     {
-        $sql ="UPDATE producto SET categoriaid='$categoriaid',mediaid='$mediaid',nom_pro='$nom_pro',
-        stock_pro='$stock_pro',pre_com_pro='$pre_com_pro',pre_ven_pro='$pre_ven_pro',fec_pro='$fec_pro' WHERE idpro ='$idpro';";
+        $sql ="UPDATE inventariofisico SET productoid='$productoid',fecha='$fecha',cantidad='$cantidad' WHERE idinventario ='$idinventario';";
       // echo $sql;
       return ejecutarConsulta($sql);
     }
 
-    public function desactivar($idpro)
+    public function desactivar($idinventario)
     {
-        $sql = "UPDATE producto SET est_pro='0' WHERE idpro='$idpro' ";
+        $sql = "UPDATE inventariofisico SET estado='0' WHERE idinventario='$idinventario' ";
         return ejecutarConsulta($sql);
     }
-    public function eliminar($idpro)
+    public function eliminar($idinventario)
     {
-        $sql = "DELETE FROM producto WHERE idpro='$idpro' ";
+        $sql = "DELETE FROM inventariofisico WHERE idinventario='$idinventario' ";
         //echo $sql;
        return ejecutarConsulta($sql);
     }
  
-    public function activar($idpro)
+    public function activar($idinventario)
     {
-        $sql = "UPDATE producto SET est_pro='1' WHERE idpro='$idpro'";
+        $sql = "UPDATE inventariofisico SET estado='1' WHERE idinventario='$idinventario'";
         return ejecutarConsulta($sql);
     }
 
-    public function mostrar($idpro)
+    public function mostrar($idinventario)
     {
-        $sql = "SELECT * FROM producto WHERE idpro='$idpro'";
+        $sql = "SELECT * FROM inventariofisico WHERE idinventario='$idinventario'";
         return ejecutarConsultaSimpleFila($sql);
     }
 
     public function listar()
     {
-        $sql = "SELECT a.idpro,a.categoriaid,a.nom_pro as nombre,m.nom_med,m.nom_med as media, a.codigobarras,c.nom_cat as categoria,a.nom_pro,a.stock_pro,a.pre_com_pro,a.pre_ven_pro,a.fec_pro, a.est_pro FROM producto a INNER JOIN categoria c ON a.categoriaid=c.idcat INNER JOIN media m ON a.mediaid=m.idmed WHERE a.est_pro = '1';";
+        $sql = "SELECT * FROM `inventariofisico`";
         return ejecutarConsulta($sql);
     }
-    // REGISTROS ACTIVOS
+  /*   // REGISTROS ACTIVOS
     public function listarProductosParaProductoNombre()
     {
         $sql = "SELECT a.idpro,a.categoriaid,a.nom_pro as nombre,m.nom_med,m.nom_med as media, a.codigobarras,c.nom_cat as categoria,a.nom_pro,a.stock_pro,a.pre_com_pro,a.pre_ven_pro,a.fec_pro, a.est_pro FROM producto a INNER JOIN categoria c ON a.categoriaid=c.idcat INNER JOIN media m ON a.mediaid=m.idmed ORDER BY a.idpro DESC;";
@@ -69,7 +69,7 @@ class Producto
     {
         $sql="SELECT * FROM producto";
         return ejecutarConsulta($sql); 
-    }
+    } */
 
 }
 ?>

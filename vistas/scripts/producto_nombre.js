@@ -2,11 +2,20 @@ var tabla;
  
 function init(){
 	mostrarform(false);
+	mostrarformMl(false);
 	listar();
 
 	$("#formulario").on("submit",function(e)
 	{
 		guardaryeditar(e);	
+	})
+	$("#formularioMl").on("submit",function(e)
+	{
+		/* e.preventDefault();
+		console.log("comunicarme con python");
+		return; */
+		guardarConIa(e);	
+		//guardaryeditarMl(e);	
 	})
 
 	$.post("../ajax/producto.php?op=selectCategoria", function(r){
@@ -43,8 +52,30 @@ function mostrarform(flag){
 	{
 		$("#listadoregistros").hide();
 		$("#formularioregistros").show();
+		$("#formularioregistrosMl").hide();
+		$("#btnagregar2").hide();
 		$("btnGuardar").prop("disabled",false);
 		$("#btnagregar").hide();
+		
+	}else{
+		$("#listadoregistros").show();
+		$("#formularioregistrosMl").hide();
+		$("#formularioregistros").hide();
+		$("#btnagregar2").show();
+		$("#btnagregar").show();
+	}
+}
+// no se modifica nada
+function mostrarformMl(flag){
+	limpiar();
+	if(flag)
+	{
+		$("#listadoregistros").hide();
+		$("#formularioregistros").hide();
+		$("#formularioregistrosMl").show();
+		$("btnGuardar").prop("disabled",false);
+		$("#btnagregar").hide();
+		$("#btnagregar2").hide();
 		
 	}else{
 		$("#listadoregistros").show();
@@ -56,6 +87,7 @@ function mostrarform(flag){
 function cancelarform(){
 	limpiar();
 	mostrarform(false);
+	mostrarformMl(false);
 }
 
 function listar(){
@@ -73,7 +105,7 @@ function listar(){
 		],
 		"ajax":
 			{
-				url: '../ajax/producto_nombre.php?op=listar',
+				url: '../ajax/producto_nombre.php?op=listarProductosParaProductoNombre',
 				type: "get",
 				dataType: "json",
 				error: function (e){
@@ -108,7 +140,36 @@ function guardaryeditar(e)
 			{
 				bootbox.alert(datos);	  
 				mostrarform(false);
+				mostrarformMl(false);
 				tabla.ajax.reload();
+			}
+		});
+		limpiar();
+	/* } */
+}
+
+function guardarConIa(e)
+{
+	e.preventDefault();  // no activar la accion predeterminada del evento
+
+		//$("#btnGuardar").prop("disabled",true);
+		var formData = new FormData($("#formularioMl")[0]);
+		$.ajax({
+			url: "../ajax/producto.php?op=guardarConIa",
+			type: "POST",
+			data: formData,
+			contentType: false,
+			processData: false,
+
+			success: function(datos) //datos mensaje de archivo categoria ajax
+			{
+				bootbox.alert(datos);
+				mostrarform(false);
+				mostrarformMl(false);
+				tabla.ajax.reload();
+    /*             var array = JSON.parse(datos);  // Convertir la cadena JSON a un objeto JavaScript
+                console.log(array);  // Debería mostrar el array en la consola */
+				//$("#idpro").val(array.idpro);
 			}
 		});
 		limpiar();
@@ -121,7 +182,9 @@ function mostrar(idpro)
 	{
  
 		data = JSON.parse(data); // convierte los datos que se esta recibiendo de la url a un objeto javascrit
+		console.log(data);
 		mostrarform(true);
+		//mostrarformMl(true);
 		
 		$("#idpro").val(data.idpro);
 		$("#categoriaid").val(data.categoriaid);

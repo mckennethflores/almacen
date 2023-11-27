@@ -57,6 +57,24 @@ class Movimiento
         $sql = "SELECT movimiento.idmov as id, producto.nom_pro as producto, usuario.nom_usu as usuario, tipomovimiento.nombre as tipo, movimiento.cantidad, movimiento.precio, movimiento.fecha, DATE_FORMAT(movimiento.fecha, '%d-%m-%Y') AS fecha_ FROM movimiento INNER JOIN producto ON movimiento.productoid = producto.idpro INNER JOIN usuario ON movimiento.usuarioid = usuario.id_usu INNER JOIN tipomovimiento ON movimiento.tipomovimientoid = tipomovimiento.id ORDER BY id;";
         return ejecutarConsulta($sql);
     }
+    public function listarParaReporte()
+    {
+        $sql = "SELECT movimiento.idmov as id, producto.nom_pro as producto, usuario.nom_usu as usuario, tipomovimiento.nombre as tipo, movimiento.cantidad, movimiento.precio, movimiento.fecha, DATE_FORMAT(movimiento.fecha, '%Y-%m-%d') AS fecha_ FROM movimiento INNER JOIN producto ON movimiento.productoid = producto.idpro INNER JOIN usuario ON movimiento.usuarioid = usuario.id_usu INNER JOIN tipomovimiento ON movimiento.tipomovimientoid = tipomovimiento.id ORDER BY id;";
+        return ejecutarConsulta($sql);
+    }
+    public function listarAnual()
+    {
+        $sql = "SELECT DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha, SUM(cantidad) AS cantidad FROM movimiento GROUP BY YEAR(fecha), MONTH(fecha) ORDER BY idmov ASC;";
+       /*  $sql = "SELECT YEAR(fecha) AS Año, 
+        DATE_FORMAT(fecha, '%d/%m/%Y') AS anios,
+        SUM(cantidad) AS cantidades
+        FROM movimiento
+        GROUP BY YEAR(fecha), MONTH(fecha);"; */
+/*         $sql = "SELECT YEAR(fecha) AS anios, SUM(cantidad) AS cantidades
+        FROM movimiento
+        GROUP BY YEAR(fecha);"; */
+        return ejecutarConsulta($sql);
+    }
     public function listarTipoMovimiento()
     {
         $sql = "SELECT * FROM `tipomovimiento`";

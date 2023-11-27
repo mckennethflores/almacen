@@ -42,7 +42,7 @@ switch($_GET["op"])
         echo json_encode($rspta);
     break;
     case 'listar':
-        $rspta=$movimiento->listar();
+        $rspta=$movimiento->listarParaReporte();
         $data = Array();
         while ($reg=$rspta->fetch_object()){
             $data[]=array(
@@ -86,6 +86,22 @@ switch($_GET["op"])
     break;
     
 
+    case 'listarAnual':
+        $rspta=$movimiento->listarAnual();
+        $data = Array();
+        while ($reg=$rspta->fetch_object()){
+            $data[]=array(
+                "0"=>$reg->fecha,
+                "1"=>$reg->cantidad
+            );
 
+        }
+        $results= array(
+            "sEcho"=>1, //info para datatables
+            "iTotalRecords"=>count($data),
+            "iTotalDisplayRecords"=>count($data),
+            "aaData"=>$data);
+        echo json_encode($results);
+    break;
 }
 ?>

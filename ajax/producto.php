@@ -13,6 +13,8 @@ $pre_ven_pro = isset($_POST["pre_ven_pro"])? limpiarCadena($_POST["pre_ven_pro"]
 $fec_pro = isset($_POST["fec_pro"])? limpiarCadena($_POST["fec_pro"]):"";
 $est_pro = isset($_POST["est_pro"])? limpiarCadena($_POST["est_pro"]):"";
 
+$barcode_pro = isset($_POST["barcode_pro"])? limpiarCadena($_POST["barcode_pro"]):"";
+
 
 //op significa Operacion
 switch($_GET["op"]){
@@ -28,6 +30,17 @@ switch($_GET["op"]){
             $rspta=$producto->editar($idpro,$categoriaid,$medidaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro);
             echo $rspta ? "Artículo actualizado" : "Artículo no se pudo actualizar";
         }
+    break;
+    case 'guardarConIa':
+
+        $command = escapeshellcmd('python script2.py ' . $barcode_pro);
+        $output = shell_exec($command);
+        
+        echo $output;
+
+/*         $rspta=$producto->insertar($categoriaid,$mediaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro);
+        echo $rspta ? "Artículo registrado" : "Artículo no se pudo registrar"; */
+        
     break;
     case 'desactivar':
         $rspta=$producto->desactivar($idpro);
