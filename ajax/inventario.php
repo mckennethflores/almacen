@@ -82,6 +82,29 @@ switch($_GET["op"]){
         echo json_encode($results);
     break;
 
+    case 'rpt_kardex':
+        $rspta=$inventario->rpt_kardex();
+        $data = Array();
+        while ($reg=$rspta->fetch_object()){
+            $data[]=array(
+                "0"=>$reg->idpro,
+                "1"=>$reg->nom_pro,
+                "2"=>$reg->fecha,
+                "3"=>$reg->nombre,
+                "4"=>$reg->ingreso,
+                "5"=>$reg->salida,
+                "6"=>$reg->saldo
+            );
+            
+        }
+        $results= array(
+            "sEcho"=>1, //info para datatables
+            "iTotalRecords"=>count($data),
+            "iTotalDisplayRecords"=>count($data),
+            "aaData"=>$data);
+        echo json_encode($results);
+    break;
+
     /* case "selectCategoria":
         require_once "../modelos/Categoria.php";
         $categoria = new Categoria();

@@ -21,8 +21,9 @@ switch($_GET["op"])
         if(empty($idmov))
         {
             $rspta=$movimiento->insertar($productoid,$tipomovimientoid,$cantidad,$precio,$fecha);
-            // echo $rspta;
-         echo $rspta ? "Artículo registrado" : "Artículo no se pudo registrar";
+          //  echo $rspta;
+        echo $rspta ? "Artículo registrado" : "Artículo no se pudo registrar";
+        
         }
         else
         {

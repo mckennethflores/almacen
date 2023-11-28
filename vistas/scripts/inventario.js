@@ -4,6 +4,7 @@ function init(){
 	mostrarform(false);
 	listar();
 	listar_exactitud();
+	listar_kardex();
 	$("#formulario").on("submit",function(e)
 	{
 		guardaryeditar(e);	
@@ -104,6 +105,34 @@ function listar_exactitud(){
 		"ajax":
 			{
 				url: '../ajax/inventario.php?op=rpt_exactitud',
+				type: "get",
+				dataType: "json",
+				error: function (e){
+					console.log(e.responseText);
+				}
+			},
+		"bDestroy": true,
+		"iDisplayLength": 25, // Paginacion c/ cuantos registros
+		"order": [[ 0, "asc" ]] // Ordenar data
+	}).DataTable();
+
+}
+function listar_kardex(){
+ 
+	tabla=$('#tbllistado_kardex').dataTable(
+	{
+		"aProcessing": true,
+		"aServerSide": true,
+		dom: 'Bfrtip',
+		buttons:	[
+			'copyHtml5',
+			'excelHtml5',
+			'csvHtml5',
+			'pdf'
+		],
+		"ajax":
+			{
+				url: '../ajax/inventario.php?op=rpt_kardex',
 				type: "get",
 				dataType: "json",
 				error: function (e){

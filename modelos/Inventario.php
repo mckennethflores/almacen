@@ -67,5 +67,26 @@ class Inventario
         INNER JOIN producto ON producto.idpro = inventariofisico.productoid";
         return ejecutarConsulta($sql);
     }
+    public function rpt_kardex()
+	{
+		$sql="SELECT
+		kardex.idkardex,
+		producto.idpro,
+		kardex.productoid,
+		producto.nom_pro,
+		tipomovimiento.id,
+		tipomovimiento.nombre,
+		kardex.fecha,
+		kardex.tipomovimientoid,
+		kardex.ingreso,
+		kardex.salida,
+		kardex.saldo
+		FROM
+		kardex
+		INNER JOIN producto ON producto.idpro = kardex.productoid
+		INNER JOIN tipomovimiento ON tipomovimiento.id = kardex.tipomovimientoid
+		";
+		return ejecutarConsulta($sql);		
+	}
 }
 ?>

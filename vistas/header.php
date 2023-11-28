@@ -147,13 +147,14 @@ if (strlen(session_id()) < 1)
               </ul>
             </li>
             <li class="treeview">
-              <a href="#">
+              <a id="mReportes" href="#">
                 <i class="fa fa-laptop"></i>
-                <span>IA</span>
+                <span>Inventario</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="producto.php"><i class="fa fa-circle-o"></i> Productos con codigo de barras</a></li>
+                <li><a href="reporte_general.php"><i class="fa fa-circle-o"></i>Inventario Productos</a></li>
+                <li><a href="inventario.php"><i class="fa fa-circle-o"></i>Inventario</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -166,18 +167,17 @@ if (strlen(session_id()) < 1)
                 <li><a href="reporte_general.php"><i class="fa fa-circle-o"></i>Reporte General</a></li>
                 <li><a href="reporte_stock_productos.php"><i class="fa fa-circle-o"></i>Stock de productos</a></li>
                 <li><a href="reporte_exactitud.php"><i class="fa fa-circle-o"></i>Reporte de Exactitud</a></li>
+                <li><a href="reporte_kardex.php"><i class="fa fa-circle-o"></i>Reporte de Kardex</a></li>
               </ul>
             </li>
             <li class="treeview">
-              <a id="mReportes" href="#">
+              <a href="#">
                 <i class="fa fa-laptop"></i>
-                <span>Inventario</span>
+                <span>ML</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="reportes.php"><i class="fa fa-circle-o"></i>Inventario Productos</a></li>
-                <li><a href="inventario.php"><i class="fa fa-circle-o"></i>Inventario</a></li>
-           
+                <li><a href="producto.php"><i class="fa fa-circle-o"></i> Productos con codigo de barras</a></li>
               </ul>
             </li>
             <?php
