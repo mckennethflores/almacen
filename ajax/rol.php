@@ -3,7 +3,7 @@ session_start();
 require_once "../modelos/Rol.php";
 
 $rol=new Rol();
-$id=isset($_POST["id"])? limpiarCadena($_POST["id"]):"";
+$id=isset($_POST["id_rol"])? limpiarCadena($_POST["id_rol"]):"";
 $nom_rol=isset($_POST["nom_rol"])? limpiarCadena($_POST["nom_rol"]):"";
 
 
@@ -41,12 +41,11 @@ $nom_rol=isset($_POST["nom_rol"])? limpiarCadena($_POST["nom_rol"]):"";
             while ($reg=$rspta->fetch_object()){
 
                 $data[]=array(
-                    "0"=>($reg->con_rol)?"<button class='btn btn-warning' onclick='mostrar(".$reg->id.")'><i class='fa fa-pencil'></i></button>".
-                    " <button class='btn btn-danger' onclick='desactivar(".$reg->id.")'><i class='fa fa-close'></i></button>":
-                    "<button class='btn btn-warning' onclick='mostrar(".$reg->id.")'><i class='fa fa-pencil'></i></button>".
-                    " <button class='btn btn-primary' onclick='activar(".$reg->id.")'><i class='fa fa-check'></i></button>",
-                    "1"=>$reg->nom_rol,
-                    "2"=>$reg->con_rol
+                    "0"=>($reg->act_rol)?"<button class='btn btn-warning' onclick='mostrar(".$reg->id_rol.")'><i class='fa fa-pencil'></i></button>".
+                    " <button class='btn btn-danger' onclick='desactivar(".$reg->id_rol.")'><i class='fa fa-close'></i></button>":
+                    "<button class='btn btn-warning' onclick='mostrar(".$reg->id_rol.")'><i class='fa fa-pencil'></i></button>".
+                    " <button class='btn btn-primary' onclick='activar(".$reg->id_rol.")'><i class='fa fa-check'></i></button>",
+                    "1"=>$reg->nom_rol
 
                 );
             }

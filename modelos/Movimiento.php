@@ -56,12 +56,12 @@ class Movimiento
 
     public function listar()
     {
-        $sql = "SELECT movimiento.idmov as id, producto.nom_pro as producto, usuario.nom_usu as usuario, tipomovimiento.nombre as tipo, movimiento.cantidad, movimiento.precio, movimiento.fecha, DATE_FORMAT(movimiento.fecha, '%d-%m-%Y') AS fecha_ FROM movimiento INNER JOIN producto ON movimiento.productoid = producto.idpro INNER JOIN usuario ON movimiento.usuarioid = usuario.id_usu INNER JOIN tipomovimiento ON movimiento.tipomovimientoid = tipomovimiento.id ORDER BY id;";
+        $sql = "SELECT movimiento.idmov as id, producto.nom_pro as producto, usuario.nom_us as usuario, tipomovimiento.nombre as tipo, movimiento.cantidad, movimiento.precio, movimiento.fecha, DATE_FORMAT(movimiento.fecha, '%d-%m-%Y') AS fecha_ FROM movimiento INNER JOIN producto ON movimiento.productoid = producto.idpro INNER JOIN usuario ON movimiento.usuarioid = usuario.id INNER JOIN tipomovimiento ON movimiento.tipomovimientoid = tipomovimiento.id ORDER BY id;";
         return ejecutarConsulta($sql);
     }
     public function listarParaReporte()
     {
-        $sql = "SELECT movimiento.idmov as id, producto.nom_pro as producto, usuario.nom_usu as usuario, tipomovimiento.nombre as tipo, movimiento.cantidad, movimiento.precio, movimiento.fecha, DATE_FORMAT(movimiento.fecha, '%Y-%m-%d') AS fecha_ FROM movimiento INNER JOIN producto ON movimiento.productoid = producto.idpro INNER JOIN usuario ON movimiento.usuarioid = usuario.id_usu INNER JOIN tipomovimiento ON movimiento.tipomovimientoid = tipomovimiento.id ORDER BY id;";
+        $sql = "SELECT movimiento.idmov as id, producto.nom_pro as producto, usuario.nom_us as usuario, tipomovimiento.nombre as tipo, movimiento.cantidad, movimiento.precio, movimiento.fecha, DATE_FORMAT(movimiento.fecha, '%Y-%m-%d') AS fecha_ FROM movimiento INNER JOIN producto ON movimiento.productoid = producto.idpro INNER JOIN usuario ON movimiento.usuarioid = usuario.id INNER JOIN tipomovimiento ON movimiento.tipomovimientoid = tipomovimiento.id ORDER BY id;";
         return ejecutarConsulta($sql);
     }
     public function listarAnual()

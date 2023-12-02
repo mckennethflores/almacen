@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-if(!isset($_SESSION["nombre"]))
+if(!isset($_SESSION["idusuario"]))
 {
   header("Location: login.html");
 }
@@ -9,8 +9,8 @@ else
 {
 require_once("header.php");
 
-/* if ($_SESSION['almacen']==1)
-{ */
+if ($_SESSION['movimiento']==1)
+{
 ?>
 
 
@@ -95,11 +95,11 @@ require_once("header.php");
   <!--Fin-Contenido-->
 
 <?php
-/* }
+}
 else
 {
   require 'noacceso.php';
-} */
+}
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>

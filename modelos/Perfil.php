@@ -16,18 +16,18 @@ class Perfil{
     }
 
     public function mostrar(){
-        $sql="SELECT * FROM usuario_copy WHERE id=$this->idUsuarioSesion";
+        $sql="SELECT * FROM usuario WHERE id=$this->idUsuarioSesion";
         return ejecutarConsultaSimpleFila($sql);
     }
     //Función para verificar el acceso al sistema
 	public function verificar($cla_us)
     {
-    	$sql="SELECT id FROM usuario_copy WHERE usu_us='$this->usuUsuario' AND cla_us='$cla_us' AND con_us='1'"; 
+    	$sql="SELECT id FROM usuario WHERE usu_us='$this->usuUsuario' AND cla_us='$cla_us' AND con_us='1'"; 
     	return ejecutarConsultaSimpleFila($sql);  
     }
     
 	public function actualizarClave($clavehash, $nuevaclavehash){
-		$sql="UPDATE usuario_copy SET cla_us='$nuevaclavehash' WHERE usu_us='$this->usuUsuario' AND id='$this->idUsuarioSesion' AND  cla_us='$clavehash' AND con_us='1'";
+		$sql="UPDATE usuario SET cla_us='$nuevaclavehash' WHERE usu_us='$this->usuUsuario' AND id='$this->idUsuarioSesion' AND  cla_us='$clavehash' AND con_us='1'";
         ejecutarConsulta($sql);
 	}
 }

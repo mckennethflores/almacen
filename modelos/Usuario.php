@@ -14,7 +14,7 @@ class Usuario{
 
     public function insertarAdministrador($nom_us,$usu_us,$cla_us,$rol_id_us){
         $sw=true;
-        $sql="INSERT INTO usuario_copy (nom_us, usu_us, cla_us, rol_id_us, imagen_us, con_us) VALUES('$nom_us','$usu_us','$cla_us','$rol_id_us', 'perfil_default.jpg', '1')";
+        $sql="INSERT INTO usuario (nom_us, usu_us, cla_us, rol_id_us, imagen_us, con_us) VALUES('$nom_us','$usu_us','$cla_us','$rol_id_us', 'perfil_default.jpg', '1')";
             $idusuarionew=ejecutarConsulta_retornarID($sql);
 
             $sql="SELECT * FROM permiso WHERE idpermiso>0";
@@ -31,10 +31,26 @@ class Usuario{
     }
     public function insertarVendedor($nom_us,$usu_us,$cla_us,$rol_id_us){
         $sw=true;
-            $sql="INSERT INTO usuario_copy (nom_us, usu_us, cla_us, rol_id_us, imagen_us, con_us) VALUES('$nom_us','$usu_us','$cla_us','$rol_id_us', 'perfil_default.jpg', '1')";
+            $sql="INSERT INTO usuario (nom_us, usu_us, cla_us, rol_id_us, imagen_us, con_us) VALUES('$nom_us','$usu_us','$cla_us','$rol_id_us', 'perfil_default.jpg', '1')";
             $idusuarionew=ejecutarConsulta_retornarID($sql);
 
-            $sql="SELECT * FROM permiso_vendedor WHERE idpermiso>0";
+            $sql="SELECT * FROM permiso_supervisor WHERE idpermiso>0";
+            $sql1 = ejecutarConsulta($sql);
+
+            while ($reg = mysqli_fetch_array($sql1)) {
+
+                $idpermiso = $reg['idpermiso'];
+                $sql3 = "INSERT INTO usuario_permiso(idusuario, idpermiso) VALUES ($idusuarionew, $idpermiso)";
+                ejecutarConsulta($sql3);
+            }
+        return $sw;
+    }    
+    public function insertarUsuario($nom_us,$usu_us,$cla_us,$rol_id_us){
+        $sw=true;
+            $sql="INSERT INTO usuario (nom_us, usu_us, cla_us, rol_id_us, imagen_us, con_us) VALUES('$nom_us','$usu_us','$cla_us','$rol_id_us', 'perfil_default.jpg', '1')";
+            $idusuarionew=ejecutarConsulta_retornarID($sql);
+
+            $sql="SELECT * FROM permiso_usuario WHERE idpermiso>0";
             $sql1 = ejecutarConsulta($sql);
 
             while ($reg = mysqli_fetch_array($sql1)) {
@@ -52,12 +68,13 @@ class Usuario{
         // SI ROL = 1
         // BORRAMOS SU ROL ACTUAL
         // LUEGO CREAMOS EL ROL 1
-        if((int)$rol_id_us == 1){
+        if((int)$rol_id_us == 1)
+        {
             // borramos los permisos actuales
             $sql_delete="DELETE FROM usuario_permiso WHERE idusuario = '$id'";
             $sql_delete = ejecutarConsulta($sql_delete);
             // insertamos los permisos nuevos de acuerdo al rol
-            $sql = "UPDATE usuario_copy SET nom_us='$nom_us', usu_us='$usu_us', cla_us='$cla_us', rol_id_us='$rol_id_us' WHERE id='$id'";
+            $sql = "UPDATE usuario SET nom_us='$nom_us', usu_us='$usu_us', cla_us='$cla_us', rol_id_us='$rol_id_us' WHERE id='$id'";
             ejecutarConsulta($sql);
 
             //contar cuantos permisos hay
@@ -71,17 +88,17 @@ class Usuario{
                 $sql3 = "INSERT INTO usuario_permiso(idusuario, idpermiso) VALUES ($id, $idpermiso)";
                 ejecutarConsulta($sql3);
             }
-        }
-        else{
+        } elseif((int)$rol_id_us == 2)
+        {
             // borramos los permisos actuales
             $sql_delete="DELETE FROM usuario_permiso WHERE idusuario = '$id'";
             $sql_delete = ejecutarConsulta($sql_delete);
 
-            $sql = "UPDATE usuario_copy SET nom_us='$nom_us', usu_us='$usu_us', cla_us='$cla_us', rol_id_us='$rol_id_us' WHERE id='$id'";
+            $sql = "UPDATE usuario SET nom_us='$nom_us', usu_us='$usu_us', cla_us='$cla_us', rol_id_us='$rol_id_us' WHERE id='$id'";
             ejecutarConsulta($sql);
 
             //contar cuantos permisos hay
-            $sql="SELECT * FROM permiso_vendedor WHERE idpermiso>0";
+            $sql="SELECT * FROM permiso_supervisor WHERE idpermiso>0";
             $sql1 = ejecutarConsulta($sql);
 
             while ($reg = mysqli_fetch_array($sql1)) {
@@ -92,6 +109,27 @@ class Usuario{
                 ejecutarConsulta($sql3);
                 
             }
+        }else
+        {
+            // borramos los permisos actuales
+            $sql_delete="DELETE FROM usuario_permiso WHERE idusuario = '$id'";
+            $sql_delete = ejecutarConsulta($sql_delete);
+            
+            $sql = "UPDATE usuario SET nom_us='$nom_us', usu_us='$usu_us', cla_us='$cla_us', rol_id_us='$rol_id_us' WHERE id='$id'";
+            ejecutarConsulta($sql);
+
+            //contar cuantos permisos hay
+            $sql="SELECT * FROM permiso_usuario WHERE idpermiso>0";
+            $sql1 = ejecutarConsulta($sql);
+
+            while ($reg = mysqli_fetch_array($sql1)) {
+
+                $idpermiso = $reg['idpermiso'];
+
+                $sql3 = "INSERT INTO usuario_permiso (idusuario, idpermiso) VALUES ($id, $idpermiso)";
+                ejecutarConsulta($sql3);
+                
+            }                     
         }
         return $sw; 
 
@@ -107,30 +145,30 @@ class Usuario{
     //Metodo para desactivar 
     public  function desactivar($id)
     {
-        $sql = "UPDATE usuario_copy SET con_us='0' WHERE id='$id'";
+        $sql = "UPDATE usuario SET con_us='0' WHERE id='$id'";
         return ejecutarConsulta($sql);
     }
     //Metodo para activar 
     public  function activar($id)
     {
-        $sql = "UPDATE usuario_copy SET con_us='1' WHERE id='$id'";
+        $sql = "UPDATE usuario SET con_us='1' WHERE id='$id'";
         return ejecutarConsulta($sql);
     }
 
      // El metodo muestra los datos de un registro a modificar
      public function mostrar($id)
      {
-         $sql="SELECT usuario_copy.id, usuario_copy.nom_us, usuario_copy.usu_us, usuario_copy.cla_us, rol.nom_rol, rol.id_rol, usuario_copy.con_us FROM usuario_copy INNER JOIN rol ON usuario_copy.rol_id_us = rol.id_rol
-          WHERE usuario_copy.id='$id'";
+         $sql="SELECT usuario.id, usuario.nom_us, usuario.usu_us, usuario.cla_us, grupo.nom_rol, grupo.id_rol, usuario.con_us FROM usuario INNER JOIN grupo ON usuario.rol_id_us = grupo.id_rol
+          WHERE usuario.id='$id'";
          return ejecutarConsultaSimpleFila($sql);
      }
 
     public function listar()
     {
         if ($this->idRol == ROL_ADMINISTRADOR) {
-            $sql="SELECT usuario_copy.id, usuario_copy.nom_us, usuario_copy.usu_us, usuario_copy.cla_us, rol.nom_rol, rol.id_rol, usuario_copy.con_us FROM usuario_copy INNER JOIN rol ON usuario_copy.rol_id_us = rol.id_rol  WHERE id>0";
+            $sql="SELECT usuario.id, usuario.nom_us, usuario.usu_us, usuario.cla_us, grupo.nom_rol, grupo.id_rol, usuario.con_us FROM usuario INNER JOIN grupo ON usuario.rol_id_us = grupo.id_rol  WHERE id>0";
         } else {
-            $sql="SELECT usuario_copy.id, usuario_copy.nom_us, usuario_copy.usu_us, usuario_copy.cla_us, rol.nom_rol, rol.id_rol,  usuario_copy.con_us FROM usuario_copy INNER JOIN rol ON usuario_copy.rol_id_us = rol.id_rol WHERE usuario_copy.id = $this->idUsuarioSesion";
+            $sql="SELECT usuario.id, usuario.nom_us, usuario.usu_us, usuario.cla_us, grupo.nom_rol, grupo.id_rol,  usuario.con_us FROM usuario INNER JOIN grupo ON usuario.rol_id_us = grupo.id_rol WHERE usuario.id = $this->idUsuarioSesion";
         }
         return ejecutarConsulta($sql);
     }
@@ -153,7 +191,7 @@ class Usuario{
 
     public function verificar($usu_us,$cla_us,$rol_id_us)
     {
-		$sql="SELECT * FROM usuario_copy WHERE usu_us='$usu_us' AND cla_us='$cla_us' AND rol_id_us='$rol_id_us' AND con_us='1'";
+		$sql="SELECT * FROM usuario WHERE usu_us='$usu_us' AND cla_us='$cla_us' AND rol_id_us='$rol_id_us' AND con_us='1'";
         //echo $sql; return;
         return ejecutarConsulta($sql);
     }

@@ -34,7 +34,7 @@ class Reportes{
 	} */
 	public function movimientosfecha($fecha_inicio,$fecha_fin)
 	{
-		$sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_usu as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id_usu INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE DATE(m.fecha)>='$fecha_inicio' AND DATE(m.fecha)<='$fecha_fin'";
+		$sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE DATE(m.fecha)>='$fecha_inicio' AND DATE(m.fecha)<='$fecha_fin'";
 		return ejecutarConsulta($sql);		
 	}
 	public function stockdeproductos()

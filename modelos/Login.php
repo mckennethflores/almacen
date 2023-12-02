@@ -9,7 +9,7 @@ class Login{
 
     public function listarRol()
 	{
-		$sql="SELECT * FROM rol order by id_rol asc";
+		$sql="SELECT * FROM grupo order by id_rol asc";
 		return ejecutarConsulta($sql);		
     }
 }
