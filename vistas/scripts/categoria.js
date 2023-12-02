@@ -8,6 +8,7 @@ function init(){
 	{
 		guardaryeditar(e);	
 	})
+	$('#mCategoria').addClass("active");
 }
  
 function limpiar()

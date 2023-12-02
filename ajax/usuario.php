@@ -111,47 +111,63 @@ switch($_GET["op"]){
     
     case 'verificar':
         //logina acceso
-        $logina=$_POST['logina'];
-        $clavea=$_POST['clavea'];
+        $usu_us=$_POST['usu_us'];
+        $cla_us=$_POST['cla_us'];
+        $rol_id_us=$_POST['rol_id_us'];
+
+        /* echo "rol ".$rol_id_us;
         
-        $clavehash=hash("SHA256",$clavea);
+        return; */
+        
+        $clavehash=hash("SHA256",$cla_us);
 
-        $rspta=$usuario->verificar($logina,$clavehash);
-      //  var_dump($rspta); return;
+        $rspta=$usuario->verificar($usu_us,$cla_us,$rol_id_us);
+   
         $fetch=$rspta->fetch_object();
-       // 
-
+        
        
         
         if(isset($fetch))
         {
-            $_SESSION['idusuario']=$fetch->idusuario;
-            $_SESSION['nombre']=$fetch->nombre;
-            $_SESSION['imagen']=$fetch->imagen;
-            $_SESSION['login']=$fetch->login;
-          /*   $_SESSION['email']=$fetch->email;
-            $_SESSION['cargo']=$fetch->cargo; */
-
-           /*  $marcados = $usuario->listarmarcados($fetch->idusuario); */
-            // me muestra todos los permisos en un arreglo
-           /*  $valores=array();
-            while($per = $marcados->fetch_object())
+                /*SI HAY UN USUARIO EXISTENTE*/
+                /*OBTENGO EN UNA VARIABLE EN SESION LOS DATOS DE ESE USUARIO*/            
+                $_SESSION['idusuario']=$fetch->id;
+                $_SESSION['nomusuario']=$fetch->nom_us;
+                $_SESSION['imagenusuario']=$fetch->imagen_us;
+                $_SESSION['dniusuario']=$fetch->usu_us;
+                $_SESSION['rol_id_us']=$fetch->rol_id_us;
+                /* Trae todos el permiso de los modulos asignados */
+                $marcados = $usuario->listarmarcados($fetch->id);
+              
+                $valores=array();
+                $menu = array();
+                //recorre todos los datos
+                // asigna una matriz doble 
+                while ($per = $marcados->fetch_object())
                 {
-                    array_push($valores,$per->idpermiso);
-                } */
+                    array_push($valores, $per->idpermiso);
+                    $menu[$per->idpermiso] = $per->nombre;
+                    $menu['url'][$per->idpermiso] = $per->url;
+                    $menu['id'][$per->idpermiso] = $per->id;
+                    $menu['icono'][$per->idpermiso] = $per->icono;
+                    
+                }
+               /*  var_dump($_SESSION['permisos_idmodulos']);  */
+                //Esta sesión la uso para seleccionar que modulos mostrar y acceder
+                $_SESSION['permisos_idmodulos'] = $valores;
+                $_SESSION['permisos_nommodulos'] = $menu;
+                in_array(1,$valores)?$_SESSION['escritorio']=1:$_SESSION['escritorio']=0;
+                in_array(2,$valores)?$_SESSION['categoria']=1:$_SESSION['categoria']=0;
+                in_array(3,$valores)?$_SESSION['media']=1:$_SESSION['media']=0;
+                in_array(4,$valores)?$_SESSION['productos']=1:$_SESSION['productos']=0;
+                in_array(5,$valores)?$_SESSION['reportes']=1:$_SESSION['reportes']=0;
+                in_array(6,$valores)?$_SESSION['rpt_movimiento_inventario']=1:$_SESSION['rpt_movimiento_inventario']=0;
+                in_array(7,$valores)?$_SESSION['rpt_ganancia']=1:$_SESSION['rpt_ganancia']=0;
+                in_array(8,$valores)?$_SESSION['machine_learning']=1:$_SESSION['machine_learning']=0;
+                in_array(9,$valores)?$_SESSION['ml_insumos']=1:$_SESSION['ml_insumos']=0;
+                in_array(10,$valores)?$_SESSION['mi_perfil']=1:$_SESSION['mi_perfil']=0;
+                in_array(11,$valores)?$_SESSION['usuario']=1:$_SESSION['usuario']=0;
 
-//in_array comprueba si existe un valor
-          /*  in_array(1,$valores)?$_SESSION['escritorio']=1:$_SESSION['escritorio']=0;
-            in_array(2,$valores)?$_SESSION['almacen']=1:$_SESSION['almacen']=0;
-            in_array(3,$valores)?$_SESSION['compras']=1:$_SESSION['compras']=0;
-            in_array(4,$valores)?$_SESSION['ventas']=1:$_SESSION['ventas']=0;
-            in_array(5,$valores)?$_SESSION['acceso']=1:$_SESSION['acceso']=0;
-            in_array(6,$valores)?$_SESSION['consultac']=1:$_SESSION['consultac']=0;
-            in_array(7,$valores)?$_SESSION['consultav']=1:$_SESSION['consultav']=0;
-            in_array(8,$valores)?$_SESSION['backup']=1:$_SESSION['backup']=0;
-            in_array(9,$valores)?$_SESSION['reportes']=1:$_SESSION['reportes']=0;
-            in_array(10,$valores)?$_SESSION['consultavprod']=1:$_SESSION['consultavprod']=0;
-            in_array(11,$valores)?$_SESSION['cotizacion']=1:$_SESSION['cotizacion']=0; */
 
         }
         echo json_encode($fetch);

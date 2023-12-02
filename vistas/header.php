@@ -70,15 +70,15 @@ if (strlen(session_id()) < 1)
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="../files/usuarios/<?php echo $_SESSION['imagen']; ?>" class="user-image" alt="User Image">
-                  <span class="hidden-xs text-dark"><?php echo $_SESSION['nombre']; ?></span>
+                  <img src="../files/usuarios/<?php echo $_SESSION['imagenusuario']; ?>" class="user-image" alt="User Image">
+                  <span class="hidden-xs text-dark"><?php echo $_SESSION['nomusuario']; ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="../files/usuarios/<?php echo $_SESSION['imagen']; ?>" class="img-circle" alt="User Image">
+                    <img src="../files/usuarios/<?php echo $_SESSION['imagenusuario']; ?>" class="img-circle" alt="User Image">
                     <p>
-                    Nombre: <?php echo $_SESSION['nombre']; ?> <br>
+                    Nombre: <?php echo $_SESSION['nomusuario']; ?> <br>
                    <!--  Cargo: --> <?php /* echo $_SESSION['cargo']; */ ?>
                     
                    </p>
@@ -109,11 +109,24 @@ if (strlen(session_id()) < 1)
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
-            <li>
+            <?php 
+            $menu = $_SESSION['permisos_nommodulos'];
+            foreach($_SESSION['permisos_idmodulos'] as $permiso){
+              ?>
+              <li id="<?php echo $menu['id'][$permiso]  ?>">
+                <a href="<?php echo $menu['url'][$permiso] ?>">
+                  <i class="fa <?php echo $menu['icono'][$permiso] ?>"></i> <span><?php echo $menu[$permiso] ?></span>
+                </a>
+              </li>
+              <?php
+            }
+            ?>            
+            <!-- <li>
               <a href="escritorio.php">
                 <i class="fa fa-tasks"></i> <span>Escritorio</span>
               </a>
-            </li>
+            </li> -->
+            
             <?php
            /*  if($_SESSION['escritorio']==1)
             {
@@ -124,7 +137,119 @@ if (strlen(session_id()) < 1)
             </li>';
             } */
             ?>
+
+            <!-- Codigo nuevo -->
+           <!--  <li class="treeview">
+              <a href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Mantenimiento</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="categoria.php"><i class="fa fa-circle-o"></i>Categorías</a></li>
+                <li><a href="media.php"><i class="fa fa-circle-o"></i>Media</a></li>
+                <li><a href="producto_nombre.php"><i class="fa fa-circle-o"></i>Productos</a></li>
+               <!--  <li><a href="proveedores.php"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                <li><a href="clientes.php"><i class="fa fa-circle-o"></i>Clientes</a></li> -->
+              </ul>
+            </li> -->
+
+            <!-- <li class="treeview">
+              <a href="#">
+                <i class="fa fa-th"></i>
+                <span>Compras</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="compras.php"><i class="fa fa-circle-o"></i>Compras</a></li>
+              </ul>
+            </li>
             <li class="treeview">
+              <a href="#">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Ventas</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="ventas.php"><i class="fa fa-circle-o"></i>Ventas</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-bookmark"></i>
+                <span>Reservas</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="reservas.php"><i class="fa fa-circle-o"></i>Reservas</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-exchange"></i>
+                <span>Transferencias</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="compras.php"><i class="fa fa-circle-o"></i>Transferencias</a></li>
+              </ul>
+            </li> -->
+           <!--  <li class="treeview">
+              <a href="#">
+                <i class="fa fa-bar-chart"></i>
+                <span>Reportes</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="reporte_general.php"><i class="fa fa-circle-o"></i>Reportes Generales Inf. Mensuales</a></li>
+                <li><a href="reporte_kardex.php"><i class="fa fa-circle-o"></i>Reportes Movimiento Inventario</a></li>
+                <li><a href="reporte_ganancias.php"><i class="fa fa-circle-o"></i>Reportes de Ganancias</a></li>
+                <li><a href="reporte_stock_productos.php"><i class="fa fa-circle-o"></i>Stock de productos</a></li>
+                <li><a href="reporte_exactitud.php"><i class="fa fa-circle-o"></i>Reporte de Exactitud o precisión</a></li>
+                <li><a href="reporte_kardex.php"><i class="fa fa-circle-o"></i>Reporte de Kardex</a></li>
+                <li><a href="reporte_kardex.php"><i class="fa fa-circle-o"></i>Reporte de Productos agotados</a></li>
+              </ul>
+            </li> -->
+            <!-- <li class="treeview">
+              <a href="#">
+                <i class="fa fa-bell-o"></i>
+                <span>Alertas</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="niveles_de_alertas.php"><i class="fa fa-circle-o"></i>Niveles de Alertas</a></li>
+
+              </ul>
+            </li> -->
+<!--             <li class="treeview">
+              <a href="#">
+                <i class="fa fa-industry"></i>
+                <span>Machine Learning</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="ml_ingreso_rapido_producto.php"><i class="fa fa-circle-o"></i>Ingreso rapido de producto / Codigo de barras</a></li>
+                <li><a href="ml_predicciones_ventas.php"><i class="fa fa-circle-o"></i>Predicciones de ventas</a></li>
+                <li><a href="ml_predicciones_insumos.php"><i class="fa fa-circle-o"></i>Predicciones de Insumos</a></li>
+
+              </ul>
+            </li> -->
+          <!--   <li class="treeview">
+              <a href="#">
+                <i class="fa fa-folder"></i>
+                <span>Usuarios</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="usuarios.php"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                <li><a href="perfiles_usuario.php"><i class="fa fa-circle-o"></i>Perfiles de Usuario</a></li> -->
+                <!-- <li><a href="ml_predicciones_ventas.php"><i class="fa fa-circle-o"></i>Predicciones de ventas</a></li> -->
+               <!--  <li><a href="grupos.php"><i class="fa fa-circle-o"></i>Grupos</a></li> -->
+
+         <!--      </ul>
+            </li> -->
+            <!-- /Codigo nuevo -->
+            <!-- <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>
                 <span>Maestro</span>
@@ -179,7 +304,7 @@ if (strlen(session_id()) < 1)
               <ul class="treeview-menu">
                 <li><a href="producto.php"><i class="fa fa-circle-o"></i> Productos con codigo de barras</a></li>
               </ul>
-            </li>
+            </li> -->
             <?php
            /*  if($_SESSION['almacen']==1)
             { */

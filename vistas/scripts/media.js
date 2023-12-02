@@ -9,6 +9,7 @@ function init(){
 		guardaryeditar(e);	
 	})
 	$("#imagenmuestra").hide();
+	$('#mMedia').addClass("active");
 }
  
 function limpiar()

@@ -10,7 +10,7 @@ else
 {
 require 'header.php';
 
-if ($_SESSION['reportes']==1)
+if ($_SESSION['rpt_ganancia']==1)
 {
 ?>
 <!--Contenido-->

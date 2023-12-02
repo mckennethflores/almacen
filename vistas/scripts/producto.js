@@ -19,6 +19,7 @@ function init(){
 				$('#mediaid').selectpicker('refresh');
 	});
 	$("#imagenmuestra").hide();
+	$('#mProductoNombre').addClass("active");
 }
  
 function limpiar()

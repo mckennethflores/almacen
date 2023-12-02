@@ -77,6 +77,14 @@ if (!function_exists('ejecutarConsulta'))
 		$format .= print_r($data);
 		return $format;
 	}
-	
+	function optionselected($opselected,$value){
+		if($opselected=="selected"){
+		  echo "<option value='".$value."'  selected='selected'>".$value."</option>";
+		}
+	  }
+	  function generateCode(){
+		  $code = rand(100000,999999);
+		  return $code;
+	  }
 }
 ?>

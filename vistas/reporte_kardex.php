@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-if(!isset($_SESSION["nombre"]))
+if(!isset($_SESSION["idusuario"]))
 {
   header("Location: login.html");
 }

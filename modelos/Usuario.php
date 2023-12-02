@@ -1,12 +1,17 @@
 <?php
 require_once "../config/Conexion.php";
 
-class Usuario
-{
+class Usuario{
+
+    private $idUsuarioSesion;
+    private $idRol;
+
     public function __construct()
     {
-
+/*         $this->idUsuarioSesion = $_SESSION['idusuario'];
+        $this->idRol = $_SESSION['rol_id_us']; */
     }
+    
     public function insertar($nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$cargo,$login,$clave,$imagen,$permisos)
     {
         $sql = "INSERT INTO usuario (nombre,tipo_documento,num_documento,direccion,telefono,email,cargo,login,clave,imagen,condicion)
@@ -68,18 +73,27 @@ class Usuario
         $sql = "SELECT * FROM usuario";
         return ejecutarConsulta($sql);
     }
-    public function listarmarcados($idusuario)
+/*     public function listarmarcados($idusuario)
     {
         $sql="SELECT * FROM usuario_permiso WHERE idusuario='$idusuario'";
         return ejecutarConsulta($sql);
-    }
+    } */
+    public function listarmarcados($idusuario){
+		$sql="SELECT * FROM usuario_permiso up join permiso p on(up.idpermiso = p.idpermiso) WHERE idusuario='$idusuario' order by p.idpermiso asc";
+		return ejecutarConsulta($sql);
+	}    
 
     // login
-    public function verificar($login,$clave)
+/*     public function verificar($login,$clave)
     {
         $sql="SELECT id_usu AS idusuario,grupoid,nom_usu AS nombre, nom_usu AS login,pas_usu,ima_usu AS imagen,est_usu,ult_usu FROM usuario WHERE nom_usu='$login' AND pas_usu='$clave' AND est_usu='1'";
-     /*    echo $sql;
-        return; */
+        return ejecutarConsulta($sql);
+    } */
+
+    public function verificar($usu_us,$cla_us,$rol_id_us)
+    {
+		$sql="SELECT * FROM usuario_copy WHERE usu_us='$usu_us' AND cla_us='$cla_us' AND rol_id_us='$rol_id_us' AND con_us='1'";
+        //echo $sql; return;
         return ejecutarConsulta($sql);
     }
 }

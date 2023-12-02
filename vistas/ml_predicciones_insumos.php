@@ -10,7 +10,7 @@ else
 {
 require 'header.php';
 
-if ($_SESSION['reportes']==1)
+if ($_SESSION['ml_insumos']==1)
 {
 ?>
 <!--Contenido-->
@@ -22,7 +22,7 @@ if ($_SESSION['reportes']==1)
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Reportes</h1>
+                          <h1 class="box-title">Predicciones ML</h1>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->

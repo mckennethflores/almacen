@@ -3,7 +3,7 @@
 ob_start();
 session_start();
 
-if(!isset($_SESSION["nombre"]))
+if(!isset($_SESSION["idusuario"]))
 {
   header("Location: login.html");
 }
@@ -11,8 +11,8 @@ else
 {
 require_once("header.php");
 
-/* if ($_SESSION['almacen']==1)
-{ */
+if ($_SESSION['media']==1)
+{
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -81,11 +81,11 @@ require_once("header.php");
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
 <?php
-/* }
+}
 else
 {
   require 'noacceso.php';
-} */
+}
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="scripts/media.js"></script>
