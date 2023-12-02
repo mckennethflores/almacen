@@ -2,110 +2,95 @@
 session_start();
 require_once "../modelos/Usuario.php";
 
-$usuario = new Usuario();
-// condicion de una sola linea
-$idusuario = isset($_POST["idusuario"])? limpiarCadena($_POST["idusuario"]):"";
-$nombre = isset($_POST["nombre"])? limpiarCadena($_POST["nombre"]):"";
-$tipo_documento = isset($_POST["tipo_documento"])? limpiarCadena($_POST["tipo_documento"]):"";
-$num_documento = isset($_POST["num_documento"])? limpiarCadena($_POST["num_documento"]):"";
-$direccion = isset($_POST["direccion"])? limpiarCadena($_POST["direccion"]):"";
-$telefono = isset($_POST["telefono"])? limpiarCadena($_POST["telefono"]):"";
-$email = isset($_POST["email"])? limpiarCadena($_POST["email"]):"";
-$cargo = isset($_POST["cargo"])? limpiarCadena($_POST["cargo"]):"";
-$login = isset($_POST["login"])? limpiarCadena($_POST["login"]):"";
-$clave = isset($_POST["clave"])? limpiarCadena($_POST["clave"]):"";
-$imagen = isset($_POST["imagen"])? limpiarCadena($_POST["imagen"]):"";
-//op significa Operacion
+$usuario=new Usuario();
+
+$id=isset($_POST["id"])? limpiarCadena($_POST["id"]):"";
+$nom_us=isset($_POST["nom_us"])? limpiarCadena($_POST["nom_us"]):"";
+$usu_us=isset($_POST["usu_us"])? limpiarCadena($_POST["usu_us"]):"";
+$cla_us=isset($_POST["cla_us"])? limpiarCadena($_POST["cla_us"]):"";
+
+
+//Rol
+$rol_id_us=isset($_POST["rol_id_us"])? limpiarCadena($_POST["rol_id_us"]):"";
+
+
 switch($_GET["op"]){
+
     case 'guardaryeditar':
-    // if (usuario no ha seleccionado ningun archivo o no existe ningun archivo dentro del objeto)
-    if(!file_exists($_FILES['imagen']['tmp_name']) || !is_uploaded_file($_FILES['imagen']['tmp_name']))
-    {
-        $imagen =$_POST["imagenactual"];
 
-    }
-    else
-    {
-        // $ext = $extension
-        $ext = explode(".", $_FILES["imagen"]["name"]);
-        if($_FILES['imagen']['type'] == "image/jpg" || $_FILES['imagen']['type'] == "image/jpeg" || $_FILES['imagen']['type'] == "image/png")
-        {
-            $imagen = round(microtime(true)) . '.' . end($ext);
-            move_uploaded_file($_FILES["imagen"]["tmp_name"], "../files/usuarios/" .$imagen);
-        }
-    }
-    // Encriptando
-    $clavehash=hash("SHA256",$clave);
+        if(empty($id)){
+            
+            if((int)$rol_id_us == ROL_ADMINISTRADOR){
+                $rspta=$usuario->insertarAdministrador($nom_us,$usu_us,$cla_us,$rol_id_us);
+                 echo $rspta ? "Se registro el usuario Administrador Satisfactoriamente": "No se pudo registrar el usuario Administrador";
+            }else if((int)$rol_id_us == ROL_VENDEDOR){
 
-        if(empty($idusuario)){
-            $rspta=$usuario->insertar($nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$cargo,$login,$clavehash,$imagen,$_POST['permiso']);
-            echo $rspta ? "Usuario registrado" : "No se registraron con exito todos los datos del usuario";
-        }
-        else {
-            $rspta=$usuario->editar($idusuario,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$cargo,$login,$clavehash,$imagen,$_POST['permiso']);
-            echo $rspta ? "Usuario actualizado" : "Usuario no se pudo actualizar";
+                $rspta=$usuario->insertarVendedor($nom_us,$usu_us,$cla_us,$rol_id_us);
+                echo $rspta ? "Se registro el usuario Vendedor Satisfactoriamente": "No se pudo registrar el usuario Vendedor";
+            }else{
+                echo "Rol Ingresado es equivocado: error: 408".$rol_id_us;
+            }
+            
+        }else{
+            $rspta=$usuario->editar($id,$nom_us,$usu_us,$cla_us,$rol_id_us);
+            
+            echo $rspta ? "Usuario Actualizad(a)": "Usuario No se puedo actualizar";
         }
     break;
-    case 'desactivar':
-        $rspta=$usuario->desactivar($idusuario);
-        echo $rspta ? "Usuario Desactivado" : "Usuario no se puede desactivar";
+    
+    case 'desactivar';
+    $rspta=$usuario->desactivar($id);
+    echo $rspta ? "Usuario Desactivad(a)": "Usuario No se pudo desactivar";
     break;
+
     case 'activar':
-        $rspta=$usuario->activar($idusuario);
-        echo $rspta ? "Usuario activado" : "Usuario no se pudo activar";      
+    $rspta=$usuario->activar($id);
+    echo $rspta ? "Usuario Activad(a)": "Usuario No se pudo activar";
     break;
+
     case 'mostrar':
-        $rspta=$usuario->mostrar($idusuario);
+        $rspta=$usuario->mostrar($id);
         echo json_encode($rspta);
     break;
     case 'listar':
         $rspta=$usuario->listar();
-        $data = Array();
+        $data= Array();
         while ($reg=$rspta->fetch_object()){
+            $cond = $reg->con_us;
+            $str = '';
+            if($cond == '1'){
+                $str .= 'Activado';
+            }else{
+                $str .= 'Desactivado';
+            }
             $data[]=array(
-                "0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->idusuario.')"><i class="fa fa-pencil"></i></button>'.
-                ' <button class="btn btn-danger" onclick="desactivar('.$reg->idusuario.')"><i class="fa fa-close"></i></button>':
-                '<button class="btn btn-warning" onclick="mostrar('.$reg->idusuario.')"><i class="fa fa-pencil"></i></button>'.
-                ' <button class="btn btn-primary" onclick="activar('.$reg->idusuario.')"><i class="fa fa-check"></i></button>',
-                "1"=>$reg->nombre,
-                "2"=>$reg->tipo_documento,
-                "3"=>$reg->num_documento,
-                "4"=>$reg->telefono,
-                "5"=>$reg->email,
-                "6"=>$reg->login,
-           //     "7"=>'<img width="50" height="50" src="../files/usuarios/'.$reg->imagen.'">',
-                 "7"=>'<img width="50" height="50" src="../files/usuarios/1533390361.jpg">',
-                "8"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':'<span class="label bg-red">Desactivado</span>'
+                "0"=>($reg->con_us)?"<button class='btn btn-warning' onclick='mostrar(".$reg->id.")'><i class='fa fa-pencil'></i></button>".
+                " <button class='btn btn-danger' onclick='desactivar(".$reg->id.")'><i class='fa fa-close'></i></button>":
+                "<button class='btn btn-warning' onclick='mostrar(".$reg->id.")'><i class='fa fa-pencil'></i></button>".
+                " <button class='btn btn-primary' onclick='activar(".$reg->id.")'><i class='fa fa-check'></i></button>",
+                "1"=>$reg->nom_us,
+                "2"=>$reg->usu_us,
+                "3"=>$reg->nom_rol,
+                "4"=>$str
             );
-
         }
-        $results= array(
-            "sEcho"=>1, //info para datatables
-            "iTotalRecords"=>count($data),
-            "iTotalDisplayRecords"=>count($data),
+        $results = array(
+            "sEcho"=>1, // Info para el datables
+            "iTotalRecords"=>count($data), // Envio total de registros al datatables
+            "iTotalDisplayRecords"=>count($data), // Total de registros a visualizar
             "aaData"=>$data);
         echo json_encode($results);
     break;
 
-    case 'permisos':
-        require_once "../modelos/Permiso.php";
-        $permiso = new Permiso();
-        $rspta = $permiso->listar();
-
-        $id=$_GET['id'];
-        // Objeto usuario
-        $marcados = $usuario->listarmarcados($id);
-        $valores=array();
-        //almacena todos los permisos
-        while($per = $marcados->fetch_object())
-        {
-            // almacena en tu array valores todas las llaves primarias 
-            array_push($valores, $per->idpermiso);
-        }
+    case "selectUsuarios":
+        require_once "../modelos/Usuario.php";
+        $usuario = new Usuario();
+        $rspta = $usuario->listar();
+        echo '<option value="0" selected disabled>Seleccione porfavor</option>';
+        echo '<option value="-1" >Todos</option>';
         while ($reg = $rspta->fetch_object())
             {
-                $sw=in_array($reg->idpermiso,$valores)?'checked':'';
-                echo '<li> <input type="checkbox" '.$sw.' name="permiso[]" value="'.$reg->idpermiso.'">'.$reg->nombre.'</li>';
+                echo '<option value=' . $reg->id . '>' . $reg->nom_us . '</option>';
             }
     break;
     
@@ -178,8 +163,45 @@ switch($_GET["op"]){
         session_unset();
         session_destroy();
         header("Location: ../index.php");
-    
-
     break;
+
+    case 'mostrardetalleperfil':
+            
+        if(!empty($_POST)){
+            $idusuario=$_POST['idusuario'];
+            $rspta=$usuario->mostrardetalleperfil($idusuario);
+        }            
+    break;
+
+    case 'editarperfil':
+        
+        if(!empty($_POST)){
+            $idusuario=$_POST['idusuario'];
+            $nomusuario=$_POST['nomusuario'];
+            $dniusuario=$_POST['dniusuario'];
+            $rspta=$usuario->editarperfil($idusuario,$nomusuario,$dniusuario);
+        }            
+    break;
+
+    case 'subir':
+        if(!empty($_POST)){
+            $idusuario=$_POST['idusuario'];
+            $imagenusuario=$_POST['imagenusuario'];
+            $rspta=$usuario->subir($idusuario,$imagenusuario);
+        }          
+    break;
+    
+    case 'selectSexousuario':
+        $rspta = $usuario->listarSexousuario();
+        while ($reg = $rspta->fetch_object()){
+                    echo '<option value=' . $reg->id . '>' . $reg->descripcion . '</option>';
+        }
+    break;
+    case 'selectPerfilUsuario':
+        $rspta = $usuario->listarPerfilUsuario();
+        while ($reg = $rspta->fetch_object()){
+                    echo '<option value=' . $reg->id . '>' . $reg->descripcion . '</option>';
+        }
+    break;    
 }
 ?>

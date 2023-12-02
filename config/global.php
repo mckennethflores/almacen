@@ -1,24 +1,14 @@
 <?php 
 
-
-//definimos la codificación de los caracteres
 define("DB_ENCODE","utf8");
-
-//Definimos una constante como nombre del proyecto
-define("PRO_NOMBRE","Mckenneth");
-
-/* Servidor Local */
-//Ip de la pc servidor de base de datos
+define("PRO_NOMBRE","NOE");
 define("DB_HOST","localhost");
-
-//Nombre de la base de datos
 define("DB_NAME", "almacendb");
-
-//Usuario de la base de datos
 define("DB_USERNAME", "root");
-
-//Contraseña del usuario de la base de datos
 define("DB_PASSWORD", "");
+
+define("ROL_ADMINISTRADOR",1);
+define("ROL_VENDEDOR",2);
 
 
 const URL = "http://localhost/almacen";

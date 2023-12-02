@@ -148,7 +148,7 @@ require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>
 <script type="text/javascript" src="../public/js/jquery.PrintArea.js "></script>
-<script type="text/javascript" src="scripts/reportes.js"></script>
+<script type="text/javascript" src="scripts/ml_ingreso_rapido.js"></script>
 <?php
 }
 ob_end_flush();
