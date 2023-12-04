@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2023 at 02:02 AM
+-- Generation Time: Dec 04, 2023 at 02:19 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -72,7 +72,9 @@ INSERT INTO `categoria` (`idcat`, `nom_cat`, `des_cat`, `con_cat`) VALUES
 (1, 'Hilos y fibras', 'Hilos y fibras', 1),
 (2, 'Telas', 'Telas', 1),
 (3, 'Prendas de vestir', 'Prendas de vestir', 1),
-(4, 'Tejidos técnicos', 'Tejidos técnicos', 1);
+(4, 'Tejidos técnicos', 'Tejidos técnicos', 1),
+(5, 'a', 'a', 0),
+(6, '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -81,38 +83,19 @@ INSERT INTO `categoria` (`idcat`, `nom_cat`, `des_cat`, `con_cat`) VALUES
 --
 
 CREATE TABLE `grupo` (
-  `idgru` int(11) NOT NULL,
-  `nom_gru` varchar(150) NOT NULL,
-  `niv_gru` int(11) NOT NULL,
-  `est_gru` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+  `id_rol` bigint(20) NOT NULL,
+  `nom_rol` varchar(40) NOT NULL,
+  `act_rol` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `grupo`
 --
 
-INSERT INTO `grupo` (`idgru`, `nom_gru`, `niv_gru`, `est_gru`) VALUES
-(1, 'Administrador', 1, 1),
-(2, 'Vendedor', 2, 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `insumo`
---
-
-CREATE TABLE `insumo` (
-  `idinsumo` bigint(20) NOT NULL,
-  `nombreinsumo` varchar(100) NOT NULL,
-  `categoriaid` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
-
---
--- Dumping data for table `insumo`
---
-
-INSERT INTO `insumo` (`idinsumo`, `nombreinsumo`, `categoriaid`) VALUES
-(1, 'Tela de Algodón', 1);
+INSERT INTO `grupo` (`id_rol`, `nom_rol`, `act_rol`) VALUES
+(1, 'Administrador', 1),
+(2, 'Supervisor', 1),
+(3, 'Usuario', 1);
 
 -- --------------------------------------------------------
 
@@ -164,7 +147,11 @@ INSERT INTO `kardex` (`idkardex`, `productoid`, `fecha`, `tipomovimientoid`, `in
 (4, 2, '2023-11-27 21:38:39', 2, 0, 3, 103),
 (5, 30, '2023-11-28 17:32:11', 2, 0, 5, 595),
 (6, 31, '2023-11-28 17:32:46', 2, 0, 1, 9),
-(7, 32, '2023-11-28 17:33:05', 2, 0, 1, 99);
+(7, 32, '2023-11-28 17:33:05', 2, 0, 1, 99),
+(8, 14, '2023-12-02 09:24:43', 1, 50, 0, 150),
+(9, 14, '2023-12-02 09:25:42', 2, 0, 4, 146),
+(10, 14, '2023-12-03 09:24:48', 1, 4, 0, 150),
+(11, 14, '2023-12-03 09:25:29', 2, 0, 20, 130);
 
 -- --------------------------------------------------------
 
@@ -219,7 +206,11 @@ INSERT INTO `movimiento` (`idmov`, `productoid`, `usuarioid`, `tipomovimientoid`
 (4, 2, 1, 2, 3, '100.00', '2023-11-27 00:00:00'),
 (5, 30, 1, 2, 5, '80.00', '2018-01-01 00:00:00'),
 (6, 31, 1, 2, 1, '40.00', '2018-01-01 00:00:00'),
-(7, 32, 1, 2, 1, '7.00', '2018-01-01 00:00:00');
+(7, 32, 1, 2, 1, '7.00', '2018-01-01 00:00:00'),
+(8, 14, -1, 1, 50, '103.00', '2023-11-27 00:00:00'),
+(9, 14, -1, 2, 4, '111.00', '2023-11-27 00:00:00'),
+(10, 14, -1, 1, 4, '144.00', '2023-11-27 00:00:00'),
+(11, 14, -1, 2, 20, '135.00', '2023-11-27 00:00:00');
 
 --
 -- Triggers `movimiento`
@@ -270,22 +261,29 @@ CREATE TABLE `permiso` (
 
 INSERT INTO `permiso` (`idpermiso`, `nombre`, `url`, `id`, `icono`) VALUES
 (1, 'Escritorio', 'escritorio.php', 'mEscritorio', 'fa-home'),
-(3, 'Cartera', 'cartera.php', 'mCartera', 'fa-users'),
-(4, 'Clientes', 'clientes.php', 'mClientes', 'fa-shield'),
-(5, 'Actividades', 'reuniones.php', 'mReuniones', 'fa-users'),
-(6, 'Reportes', 'reportes.php', 'mReportes', 'fa-bar-chart'),
-(7, 'Mi perfil', 'perfil.php', 'mPerfil', 'fa-user'),
-(8, 'Usuario', 'usuario.php', 'mUsuario', 'fa-user'),
-(9, 'Empresa', 'empresa.php', 'mEmpresa', 'fa-users'),
-(10, 'Portada', 'portada.php', 'mEscritorio', 'fa-shield');
+(2, 'Categoria', 'categoria.php', 'mCategoria', 'fa-users'),
+(3, 'Media', 'media.php', 'mMedia', 'fa-shield'),
+(4, 'Productos', 'producto_nombre.php', 'mProductoNombre', 'fa-users'),
+(5, 'Reportes Generales /Mes', 'reporte_general.php', 'mReportes', 'fa-bar-chart'),
+(6, 'Reportes Movimiento Inventario', 'reporte_kardex.php', 'mReportes', 'fa-bar-chart'),
+(7, 'Reportes de Ganancias', 'reporte_ganancias.php', 'mReportes', 'fa-bar-chart'),
+(8, 'Machine Learning', 'ml_ingreso_rapido_producto.php', 'mMachineLearning', 'fa-industry'),
+(9, 'ML Prediccion Insumos', 'ml_predicciones_insumos.php', 'mPrediccionesInsumos', 'fa-industry'),
+(10, 'Mi perfil', 'perfil.php', 'mPerfil', 'fa-user'),
+(11, 'Usuario', 'usuario.php', 'mUsuario', 'fa-user'),
+(13, 'Grupo', 'grupo.php', 'mGrupo', 'fa-users'),
+(14, 'Movimientos', 'movimiento.php', 'mMovimiento', 'fa-users'),
+(15, 'Stock de productos', 'reporte_stock_productos.php', 'mReportes', 'fa-bar-chart'),
+(16, 'Reporte de Exactitud o precisión', 'reporte_exactitud.php', 'mReportes', 'fa-bar-chart'),
+(17, 'Reporte de Productos agotados', 'reporte_kardex.php', 'mReportes', 'fa-bar-chart');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permiso_vendedor`
+-- Table structure for table `permiso_supervisor`
 --
 
-CREATE TABLE `permiso_vendedor` (
+CREATE TABLE `permiso_supervisor` (
   `idpermiso` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
   `url` varchar(50) NOT NULL,
@@ -294,17 +292,51 @@ CREATE TABLE `permiso_vendedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `permiso_vendedor`
+-- Dumping data for table `permiso_supervisor`
 --
 
-INSERT INTO `permiso_vendedor` (`idpermiso`, `nombre`, `url`, `id`, `icono`) VALUES
+INSERT INTO `permiso_supervisor` (`idpermiso`, `nombre`, `url`, `id`, `icono`) VALUES
 (1, 'Escritorio', 'escritorio.php', 'mEscritorio', 'fa-home'),
-(3, 'Empresa', 'empresa.php', 'mEmpresa', 'fa-users'),
-(4, 'Clientes', 'clientes.php', 'mClientes', 'fa-shield'),
-(5, 'Reuniones', 'reuniones.php', 'mReuniones', 'fa-users'),
-(6, 'Reportes', 'reportes.php', 'mReportes', 'fa-bar-chart'),
-(7, 'Mi perfil', 'perfil.php', 'mPerfil', 'fa-user'),
-(8, 'Cartera', 'cartera.php', 'mCartera', 'fa-shield');
+(3, 'Media', 'media.php', 'mMedia', 'fa-shield'),
+(4, 'Productos', 'producto_nombre.php', 'mProductoNombre', 'fa-users'),
+(5, 'Reportes Generales /Mes', 'reporte_general.php', 'mReportes', 'fa-bar-chart'),
+(6, 'Reportes Movimiento Inventario', 'reporte_kardex.php', 'mReportes', 'fa-bar-chart'),
+(7, 'Reportes de Ganancias', 'reporte_ganancias.php', 'mReportes', 'fa-bar-chart'),
+(8, 'Machine Learning', 'ml_ingreso_rapido_producto.php', 'mMachineLearning', 'fa-industry'),
+(9, 'ML Prediccion Insumos', 'ml_predicciones_insumos.php', 'mPrediccionesInsumos', 'fa-industry'),
+(10, 'Mi perfil', 'perfil.php', 'mPerfil', 'fa-user'),
+(11, 'Usuario', 'usuario.php', 'mUsuario', 'fa-user'),
+(14, 'Movimientos', 'movimiento.php', 'mMovimiento', 'fa-users'),
+(15, 'Stock de productos', 'reporte_stock_productos.php', 'mReportes', 'fa-bar-chart'),
+(16, 'Reporte de Exactitud o precisión', 'reporte_exactitud.php', 'mReportes', 'fa-bar-chart'),
+(17, 'Reporte de Productos agotados', 'reporte_kardex.php', 'mReportes', 'fa-bar-chart');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permiso_usuario`
+--
+
+CREATE TABLE `permiso_usuario` (
+  `idpermiso` int(11) NOT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `url` varchar(50) NOT NULL,
+  `id` varchar(50) NOT NULL,
+  `icono` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `permiso_usuario`
+--
+
+INSERT INTO `permiso_usuario` (`idpermiso`, `nombre`, `url`, `id`, `icono`) VALUES
+(1, 'Escritorio', 'escritorio.php', 'mEscritorio', 'fa-home'),
+(3, 'Media', 'media.php', 'mMedia', 'fa-shield'),
+(4, 'Productos', 'producto_nombre.php', 'mProductoNombre', 'fa-users'),
+(8, 'Machine Learning', 'ml_ingreso_rapido_producto.php', 'mMachineLearning', 'fa-industry'),
+(9, 'ML Prediccion Insumos', 'ml_predicciones_insumos.php', 'mPrediccionesInsumos', 'fa-industry'),
+(13, 'Movimientos', 'movimiento.php', 'mMovimiento', 'fa-users'),
+(14, 'Perfil', 'perfil.php', 'mPerfil', 'fa-user');
 
 -- --------------------------------------------------------
 
@@ -340,7 +372,7 @@ INSERT INTO `producto` (`idpro`, `categoriaid`, `mediaid`, `nom_pro`, `stock_pro
 (8, 3, 3, 'Producto 8', '100.00', '2.00', '4.00', '2023-11-06 17:24:52', '3300012345678', 1),
 (9, 3, 3, 'Producto 9', '100.00', '2.00', '4.00', '2023-11-06 17:25:19', '3700012345678', 1),
 (10, 4, 3, 'Producto 10', '100.00', '2.00', '4.00', '2023-11-06 17:25:39', '4000012345678', 1),
-(14, 1, 3, 'Producto 11', '100.00', '10.00', '15.00', '2023-11-18 00:00:00', '', 1),
+(14, 1, 3, 'Producto 11', '130.00', '10.00', '15.00', '2023-11-18 00:00:00', '', 1),
 (16, 1, 3, 'Producto 15 por ML.', '100.00', '10.00', '15.00', '2023-11-18 00:00:00', '', 1),
 (17, 2, 3, 'Producto 7 por ML.', '100.00', '10.00', '15.00', '2023-11-18 00:00:00', '1', 127),
 (18, 2, 3, 'Producto 18 por ML.', '100.00', '10.00', '15.00', '2023-11-18 00:00:00', '2700012345678', 1),
@@ -358,52 +390,9 @@ INSERT INTO `producto` (`idpro`, `categoriaid`, `mediaid`, `nom_pro`, `stock_pro
 (30, 1, 3, 'Rollos de tela', '595.00', '1.20', '2.00', '2018-11-06 00:00:00', '', 1),
 (31, 3, 3, 'bolsillos de camisa', '9.00', '40.00', '60.00', '2018-11-06 00:00:00', '', 1),
 (32, 4, 6, 'Marcas de ropa', '99.00', '50.00', '70.00', '2018-11-06 00:00:00', '', 1),
-(33, 3, 3, 'Producto 32 por ML.', '28.00', '10.00', '15.00', '2023-11-28 00:00:00', '3200012345678', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `productoterminado`
---
-
-CREATE TABLE `productoterminado` (
-  `idproductoterminado` bigint(20) NOT NULL,
-  `idproducto` bigint(20) NOT NULL,
-  `precio` decimal(11,2) NOT NULL,
-  `categoriaid` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rela_productosinsumo`
---
-
-CREATE TABLE `rela_productosinsumo` (
-  `idrelacion` bigint(20) NOT NULL,
-  `productoid` bigint(20) NOT NULL,
-  `insumoid` bigint(20) NOT NULL,
-  `cantidad` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rol`
---
-
-CREATE TABLE `rol` (
-  `id_rol` int(11) NOT NULL,
-  `nom_rol` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `rol`
---
-
-INSERT INTO `rol` (`id_rol`, `nom_rol`) VALUES
-(1, 'Administrador'),
-(2, 'Ejecutivo de ventas');
+(33, 3, 3, 'Producto 32 por ML.', '28.00', '10.00', '15.00', '2023-11-28 00:00:00', '3200012345678', 1),
+(34, 4, 3, 'Producto 33 por ML.', '28.00', '10.00', '15.00', '2023-12-02 00:00:00', '4400012345678', 1),
+(35, 3, 3, 'Producto 34 por ML.', '28.00', '10.00', '15.00', '2023-12-02 00:00:00', '3200012345679', 1);
 
 -- --------------------------------------------------------
 
@@ -431,44 +420,25 @@ INSERT INTO `tipomovimiento` (`id`, `nombre`) VALUES
 --
 
 CREATE TABLE `usuario` (
-  `id_usu` int(11) NOT NULL,
-  `grupoid` int(11) NOT NULL,
-  `nom_usu` varchar(180) NOT NULL,
-  `pas_usu` varchar(100) NOT NULL,
-  `ima_usu` varchar(120) DEFAULT NULL,
-  `est_usu` tinyint(4) NOT NULL,
-  `ult_usu` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
-
---
--- Dumping data for table `usuario`
---
-
-INSERT INTO `usuario` (`id_usu`, `grupoid`, `nom_usu`, `pas_usu`, `ima_usu`, `est_usu`, `ult_usu`) VALUES
-(1, 1, 'sys', '518b67e652531c5fe7e25d6b2c3b4ef6224e7d90da2091967dd47eb082b26a19', 'no.jpg', 1, '2023-10-20 13:30:57');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuario_copy`
---
-
-CREATE TABLE `usuario_copy` (
   `id` int(11) NOT NULL,
   `nom_us` varchar(45) NOT NULL,
   `usu_us` varchar(45) NOT NULL,
   `cla_us` varchar(60) NOT NULL,
-  `rol_id_us` varchar(11) NOT NULL,
+  `rol_id_us` bigint(20) NOT NULL,
   `imagen_us` varchar(100) DEFAULT NULL,
   `con_us` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `usuario_copy`
+-- Dumping data for table `usuario`
 --
 
-INSERT INTO `usuario_copy` (`id`, `nom_us`, `usu_us`, `cla_us`, `rol_id_us`, `imagen_us`, `con_us`) VALUES
-(-1, 'mack', 'sys', 'sys', '1', 'perfil_default.jpg', 1);
+INSERT INTO `usuario` (`id`, `nom_us`, `usu_us`, `cla_us`, `rol_id_us`, `imagen_us`, `con_us`) VALUES
+(-1, 'mac', 'sys', 'sys', 1, 'perfil_default.jpg', 1),
+(1, 'jose', 'jose', '123456', 1, 'perfil_default.jpg', 1),
+(3, 'supervisor', 'supervisor', 'supervisor', 2, 'perfil_default.jpg', 1),
+(4, 'adm3', 'adm3', 'adm3', 1, 'perfil_default.jpg', 1),
+(5, 'adm4', 'adm4', 'adm4', 3, 'perfil_default.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -496,7 +466,56 @@ INSERT INTO `usuario_permiso` (`idusuario_permiso`, `idusuario`, `idpermiso`) VA
 (7, -1, 7),
 (8, -1, 8),
 (9, -1, 9),
-(10, -1, 10);
+(10, -1, 10),
+(11, -1, 11),
+(63, 2, 1),
+(64, 2, 2),
+(65, 2, 3),
+(66, 2, 4),
+(67, 2, 5),
+(68, 2, 6),
+(69, 2, 7),
+(70, 2, 8),
+(71, 2, 9),
+(72, 2, 10),
+(73, 2, 11),
+(83, 4, 1),
+(84, 4, 2),
+(85, 4, 3),
+(86, 4, 4),
+(87, 4, 5),
+(88, 4, 6),
+(89, 4, 7),
+(90, 4, 8),
+(91, 4, 9),
+(92, 4, 10),
+(93, 4, 11),
+(103, -1, 13),
+(104, -1, 14),
+(105, -1, 15),
+(106, -1, 16),
+(107, -1, 17),
+(108, 3, 1),
+(109, 3, 3),
+(110, 3, 4),
+(111, 3, 5),
+(112, 3, 6),
+(113, 3, 7),
+(114, 3, 8),
+(115, 3, 9),
+(116, 3, 10),
+(117, 3, 11),
+(118, 3, 14),
+(119, 3, 15),
+(120, 3, 16),
+(121, 3, 17),
+(128, 5, 1),
+(129, 5, 3),
+(130, 5, 4),
+(131, 5, 8),
+(132, 5, 9),
+(133, 5, 13),
+(134, 5, 14);
 
 --
 -- Indexes for dumped tables
@@ -519,14 +538,7 @@ ALTER TABLE `categoria`
 -- Indexes for table `grupo`
 --
 ALTER TABLE `grupo`
-  ADD PRIMARY KEY (`idgru`);
-
---
--- Indexes for table `insumo`
---
-ALTER TABLE `insumo`
-  ADD PRIMARY KEY (`idinsumo`),
-  ADD KEY `categoriaid` (`categoriaid`);
+  ADD PRIMARY KEY (`id_rol`) USING BTREE;
 
 --
 -- Indexes for table `inventariofisico`
@@ -565,9 +577,15 @@ ALTER TABLE `permiso`
   ADD PRIMARY KEY (`idpermiso`);
 
 --
--- Indexes for table `permiso_vendedor`
+-- Indexes for table `permiso_supervisor`
 --
-ALTER TABLE `permiso_vendedor`
+ALTER TABLE `permiso_supervisor`
+  ADD PRIMARY KEY (`idpermiso`);
+
+--
+-- Indexes for table `permiso_usuario`
+--
+ALTER TABLE `permiso_usuario`
   ADD PRIMARY KEY (`idpermiso`);
 
 --
@@ -579,28 +597,6 @@ ALTER TABLE `producto`
   ADD KEY `fk_producto_media_idx` (`mediaid`);
 
 --
--- Indexes for table `productoterminado`
---
-ALTER TABLE `productoterminado`
-  ADD PRIMARY KEY (`idproductoterminado`),
-  ADD KEY `idproducto` (`idproducto`),
-  ADD KEY `categoriaid` (`categoriaid`);
-
---
--- Indexes for table `rela_productosinsumo`
---
-ALTER TABLE `rela_productosinsumo`
-  ADD PRIMARY KEY (`idrelacion`),
-  ADD KEY `productoid` (`productoid`),
-  ADD KEY `insumoid` (`insumoid`);
-
---
--- Indexes for table `rol`
---
-ALTER TABLE `rol`
-  ADD PRIMARY KEY (`id_rol`) USING BTREE;
-
---
 -- Indexes for table `tipomovimiento`
 --
 ALTER TABLE `tipomovimiento`
@@ -610,14 +606,6 @@ ALTER TABLE `tipomovimiento`
 -- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usu`),
-  ADD UNIQUE KEY `nom_usu_UNIQUE` (`nom_usu`),
-  ADD KEY `fk_usuario_grupo_idx` (`grupoid`);
-
---
--- Indexes for table `usuario_copy`
---
-ALTER TABLE `usuario_copy`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nom_us_UNIQUE` (`nom_us`),
   ADD KEY `fk_usuario_role_idx` (`rol_id_us`);
@@ -644,19 +632,13 @@ ALTER TABLE `auxiliar`
 -- AUTO_INCREMENT for table `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idcat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idcat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `idgru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `insumo`
---
-ALTER TABLE `insumo`
-  MODIFY `idinsumo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_rol` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventariofisico`
@@ -668,7 +650,7 @@ ALTER TABLE `inventariofisico`
 -- AUTO_INCREMENT for table `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idkardex` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `media`
@@ -680,43 +662,31 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT for table `movimiento`
 --
 ALTER TABLE `movimiento`
-  MODIFY `idmov` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idmov` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `permiso_vendedor`
+-- AUTO_INCREMENT for table `permiso_supervisor`
 --
-ALTER TABLE `permiso_vendedor`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `permiso_supervisor`
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `permiso_usuario`
+--
+ALTER TABLE `permiso_usuario`
+  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idpro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
-
---
--- AUTO_INCREMENT for table `productoterminado`
---
-ALTER TABLE `productoterminado`
-  MODIFY `idproductoterminado` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `rela_productosinsumo`
---
-ALTER TABLE `rela_productosinsumo`
-  MODIFY `idrelacion` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `rol`
---
-ALTER TABLE `rol`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idpro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tipomovimiento`
@@ -728,19 +698,13 @@ ALTER TABLE `tipomovimiento`
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `usuario_copy`
---
-ALTER TABLE `usuario_copy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `usuario_permiso`
 --
 ALTER TABLE `usuario_permiso`
-  MODIFY `idusuario_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idusuario_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- Constraints for dumped tables
@@ -751,7 +715,6 @@ ALTER TABLE `usuario_permiso`
 --
 ALTER TABLE `movimiento`
   ADD CONSTRAINT `fk_salida_producto` FOREIGN KEY (`productoid`) REFERENCES `producto` (`idpro`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_salida_usuario` FOREIGN KEY (`usuarioid`) REFERENCES `usuario` (`id_usu`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `movimiento_ibfk_1` FOREIGN KEY (`tipomovimientoid`) REFERENCES `tipomovimiento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -765,7 +728,7 @@ ALTER TABLE `producto`
 -- Constraints for table `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `fk_usuario_grupo` FOREIGN KEY (`grupoid`) REFERENCES `grupo` (`idgru`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`rol_id_us`) REFERENCES `grupo` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
