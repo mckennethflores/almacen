@@ -37,9 +37,14 @@ switch($_GET["op"]){
         $output = shell_exec($command);
         
         echo $output;
+        
+    break;
+    case 'guardarConIaInsumos':
 
-/*         $rspta=$producto->insertar($categoriaid,$mediaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro);
-        echo $rspta ? "Artículo registrado" : "Artículo no se pudo registrar"; */
+        $cmd_sell = escapeshellcmd('python script_insumos.py ');
+        $output = shell_exec($cmd_sell);
+        
+        echo "imageSaved";
         
     break;
     case 'desactivar':

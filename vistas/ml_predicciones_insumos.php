@@ -1,18 +1,41 @@
 <?php
 ob_start();
 session_start();
-
-if (!isset($_SESSION["idusuario"]))
+if(!isset($_SESSION["idusuario"]))
 {
   header("Location: login.html");
 }
 else
 {
-require 'header.php';
+require_once("header.php");
 
 if ($_SESSION['ml_insumos']==1)
 {
 ?>
+<style>
+  /*Estilos login*/
+#divLoading{
+/* 	position: fixed; */
+	top: 0;
+	width: 100%;
+	height: 30%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(254,254,255, .65);
+	z-index: 9999;
+	display: none;
+}
+#divLoading img{
+	width: 50px;
+	height: 50px;
+}
+.required{
+	color: red;
+	font-size: 13pt;
+	font-weight: bold;
+}
+</style>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">        
@@ -22,58 +45,65 @@ if ($_SESSION['ml_insumos']==1)
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Predicciones ML</h1>
-                        <div class="box-tools pull-right"></div>
+                          <h1 class="box-title">Producto 
+                           <button class="btn btn-primary" id="btnGMP" onclick="generateMaterialsPrediction()"><i class="fa fa-plus-circle"></i> Agregar con ML</button>
+                          </h1>
+                           <a class="btn btn-warning hidden" id="seeReports" href="ml_predicciones_insumos.php"> Ver imagenes </a>
+                        <div class="box-tools pull-right">
+                        </div>
                     </div>
+        
+              
+                      <div id="divLoading">
+                      <div>
+                      <img src="../public/img/loading.svg" alt="Loading"> <span>Generando Graficos ML</span>
+                      </div>
+                      </div>
+                     
+        
+            
                     <!-- /.box-header -->
                     <!-- centro -->
-                    <div class="panel-body table-responsive" id="listadoregistros">
-                   
-                        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label for="">Fecha Inicio</label>
-                            <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" value="">
-                        </div>
-                        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label for="">Fecha Fin</label>
-                            <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" value="<?php echo date("Y-m-d"); ?>">
-                        </div>
-                       <!--  <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label>Etapa:</label>
-                            <select id="id_eta_re" name="id_eta_re" class="form-control selectpicker" required></select>
-                        </div>
-                        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" id="empleado">
-                            <label>Empleado:</label>
-                            <select id="id_usuario_re" name="id_usuario_re" class="form-control selectpicker" required></select>
-                        </div> -->
-                        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label>Consultar:</label>
-                            <button class="btn btn-primary" onclick="listar()"><i class="fa fa-save"></i> Consultar</button>
-                        </div>
-
-                 
-                        <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
-                          <thead>
-                            <th>Fecha</th>
-                            <th>Producto </th>
-                            <th>Usuario</th>
-                            <th>Tipo</th>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                          </thead>
-                          <tbody>                            
-                          </tbody>
-                          <tfoot>
-                            <th>Fecha</th>
-                            <th>Producto </th>
-                            <th>Usuario</th>
-                            <th>Tipo</th>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                          </tfoot>
-                        </table>
+                    <div class="panel-body table-responsive" id="listadoregistros2">
+                      <div class="imagenes">
+                      <img src="../files/reportes_ml/prediccion_Botones_2024.png" alt="">
+                      </div>
+                      <div class="imagenes">
+                      <img src="../files/reportes_ml/prediccion_Etiquetas_2024.png" alt="">
+                      </div>
+                      <div class="imagenes">
+                      <img src="../files/reportes_ml/prediccion_Telas_2024.png" alt="">
+                      </div>
                     </div>
+            
+                   
+                    <!-- formularioRegistroMl -->
+                    <div class="panel-body" id="formularioregistrosMl">
+                        <form name="formularioMl" id="formularioMl" method="POST">
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Codigo de barras(*):</label>
+                            <input type="hidden" name="idpro" id="idpro">
+                            <input type="text" class="form-control" name="barcode_pro" id="barcode_pro" maxlength="250" placeholder="Barcode" >
+                          </div>
+                          <!-- <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Cantidad(*):</label>
+                            <input type="decimal" class="form-control" name="stock_pro" id="stock_pro" >
+                          </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Precio Compra:</label>
+                            <input type="text" class="form-control" name="pre_com_pro" id="pre_com_pro" maxlength="255" placeholder="S/">
+                          </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Precio Venta:</label>
+                            <input type="text" class="form-control" name="pre_ven_pro" id="pre_ven_pro" maxlength="255" placeholder="S/">
+                          </div> -->
+                          <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button class="btn btn-primary" type="submit" id="btnGuardarMl"><i class="fa fa-save"></i> Guardar</button>
+                            <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+                          </div>
+                        </form>
+                    </div>
+                    <!-- /formularioRegistroMl -->                    
                     <!--Fin centro -->
                   </div><!-- /.box -->
               </div><!-- /.col -->
@@ -82,16 +112,19 @@ if ($_SESSION['ml_insumos']==1)
 
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
+
 <?php
-}else
+}
+else
 {
   require 'noacceso.php';
 }
-require 'footer.php';
+require_once("footer.php");
 ?>
-<script src="../public/plugins/chartjs/Chart.min.js"></script>
-<script type="text/javascript" src="scripts/reportes.js"></script>
-<?php 
+<script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>
+<script type="text/javascript" src="../public/js/jquery.PrintArea.js "></script>
+<script type="text/javascript" src="scripts/ml_predicciones_insumos.js"></script>
+<?php
 }
 ob_end_flush();
 ?>
