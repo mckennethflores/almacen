@@ -8,9 +8,9 @@ if(!isset($_SESSION["idusuario"]))
 else
 {
 require_once("header.php");
-
+/* 
 if ($_SESSION['ml_insumos']==1)
-{
+{ */
 ?>
 <style>
   /*Estilos login*/
@@ -114,11 +114,11 @@ if ($_SESSION['ml_insumos']==1)
   <!--Fin-Contenido-->
 
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>

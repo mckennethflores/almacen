@@ -9,8 +9,8 @@ else
 {
 require_once("header.php");
 
-if ($_SESSION['machine_learning']==1)
-{
+/* if ($_SESSION['machine_learning']==1)
+{ */
 ?>
 
 <!--Contenido-->
@@ -139,11 +139,11 @@ if ($_SESSION['machine_learning']==1)
   <!--Fin-Contenido-->
 
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>

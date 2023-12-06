@@ -9,8 +9,8 @@ else
 {
 require_once("header.php");
 
-if ($_SESSION['movimiento']==1)
-{
+/* if ($_SESSION['movimiento']==1)
+{ */
 ?>
 
 
@@ -95,11 +95,11 @@ if ($_SESSION['movimiento']==1)
   <!--Fin-Contenido-->
 
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>

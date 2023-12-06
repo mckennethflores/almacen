@@ -11,8 +11,8 @@ else
 {
 require_once("header.php");
 
-if ($_SESSION['categoria']==1)
-{
+/* if ($_SESSION['categoria']==1)
+{ */
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -70,11 +70,11 @@ if ($_SESSION['categoria']==1)
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="scripts/grupo.js"></script>

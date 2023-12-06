@@ -10,9 +10,9 @@ if(!isset($_SESSION["idusuario"]))
 else
 {
 require_once("header.php");
-
+/* 
 if ($_SESSION['media']==1)
-{
+{ */
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -81,11 +81,11 @@ if ($_SESSION['media']==1)
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="scripts/media.js"></script>

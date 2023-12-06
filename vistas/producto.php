@@ -11,8 +11,8 @@ else
 {
 require_once("header.php");
 
-if ($_SESSION['productos']==1)
-{
+/* if ($_SESSION['productos']==1)
+{ */
 ?>
 
 <!--Contenido-->
@@ -106,11 +106,11 @@ if ($_SESSION['productos']==1)
   <!--Fin-Contenido-->
 
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/JsBarcode.all.min.js"></script>

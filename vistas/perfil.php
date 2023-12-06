@@ -13,8 +13,8 @@ print_r($_SESSION['idrol']);
 echo "</pre>";
 return; */
     require 'header.php';
-if (($_SESSION['rol_id_us']==1) || ($_SESSION['rol_id_us']==2))
-{
+/* if (($_SESSION['rol_id_us']==1) || ($_SESSION['rol_id_us']==2  ))
+{ */
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -117,10 +117,10 @@ if (($_SESSION['rol_id_us']==1) || ($_SESSION['rol_id_us']==2))
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
 <?php
-}else
+/* }else
 {
   require 'noacceso.php';
-}
+} */
 require 'footer.php';
 ?>
 

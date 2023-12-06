@@ -8,8 +8,8 @@ if(!isset($_SESSION["nombre"]))
 else
 {
 require_once("header.php");
-if ($_SESSION['acceso']==1)
-{
+/* if ($_SESSION['acceso']==1)
+{ */
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -50,11 +50,11 @@ if ($_SESSION['acceso']==1)
   <!--Fin-Contenido-->
 
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="scripts/permiso.js"></script>

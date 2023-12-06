@@ -10,8 +10,8 @@ else
 {
 require_once("header.php");
 
-if ($_SESSION['escritorio']==1)
-{
+/* if ($_SESSION['escritorio']==1)
+{ */
    /*  require_once "../modelos/Consultas.php";
     $consulta= new consultas();
     $rsptac= $consulta->totalcomprahoy();
@@ -138,11 +138,11 @@ if ($_SESSION['escritorio']==1)
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
 <?php
-}
+/* }
 else
 {
   require 'noacceso.php';
-}
+} */
 require_once("footer.php");
 ?>
 <script type="text/javascript" src="../public/js/Chart.min.js"></script>

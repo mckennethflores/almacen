@@ -10,8 +10,8 @@ else
 {
 require 'header.php';
 
-if ($_SESSION['rpt_ganancia']==1)
-{
+/* if ($_SESSION['rpt_ganancia']==1)
+{ */
 ?>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
@@ -83,10 +83,10 @@ if ($_SESSION['rpt_ganancia']==1)
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
 <?php
-}else
+/* }else
 {
   require 'noacceso.php';
-}
+} */
 require 'footer.php';
 ?>
 <script src="../public/plugins/chartjs/Chart.min.js"></script>

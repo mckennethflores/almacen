@@ -109,17 +109,53 @@ if (strlen(session_id()) < 1)
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
+
+<?php
+
+require_once "../modelos/Permiso.php";
+$permiso = new Permiso();
+$menus = $permiso->listar();
+/* var_dump($menus); */
+
+/* while($reg = $menus->fetch_object())
+{
+    echo '<option value=' . $reg->id . '>' .  $reg->role_id . '</option>';
+}
+ */
+  $rol_id_us = $_SESSION['rol_id_us'];
+ foreach ($menus as $key => $menu){
+
+  $rolesIdArray = preg_split('/,/', $menu['role_id']);
+  
+  if (!in_array($rol_id_us, $rolesIdArray)){
+    continue;
+  }
+
+  /* var_dump($menu['url']); return; */?>
+
+ <li id="<?php echo $menu['id']  ?>">
+                <a href="<?php echo $menu['url'] ?>">
+                  <i class="fa <?php echo $menu['icono'] ?>"></i> <span><?php echo $menu['nombre'] ?></span>
+                </a>
+              </li>
+
+ <?php
+ }
+
+?>
+
             <?php 
-            $menu = $_SESSION['permisos_nommodulos'];
-            foreach($_SESSION['permisos_idmodulos'] as $permiso){
+            /* $menu = $_SESSION['permisos_idmodulos'];
+            var_dump($menu); */
+            /* foreach($_SESSION['permisos_idmodulos'] as $permiso){ */
               ?>
-              <li id="<?php echo $menu['id'][$permiso]  ?>">
+             <!--  <li id="<?php echo $menu['id'][$permiso]  ?>">
                 <a href="<?php echo $menu['url'][$permiso] ?>">
                   <i class="fa <?php echo $menu['icono'][$permiso] ?>"></i> <span><?php echo $menu[$permiso] ?></span>
                 </a>
-              </li>
+              </li> -->
               <?php
-            }
+            /* } */
             ?>            
             <!-- <li>
               <a href="escritorio.php">
