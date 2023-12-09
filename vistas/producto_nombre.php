@@ -23,7 +23,7 @@ require_once("header.php");
                   <div class="box">
                     <div class="box-header with-border">
                           <h1 class="box-title">Producto <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button>
-                           <button class="btn btn-primary" id="btnagregarMl" onclick="mostrarformMl(true)"><i class="fa fa-plus-circle"></i> Agregar con ML</button></h1>
+                           <!-- <button class="btn btn-primary" id="btnagregarMl" onclick="mostrarformMl(true)"><i class="fa fa-plus-circle"></i> Agregar con ML</button> --></h1>
                            <!-- <a class="btn btn-warning" target="_blank" href="../reportes/rptarticulos.php"> Reporte Articulos </a> -->
                         <div class="box-tools pull-right">
                         </div>

@@ -39,10 +39,63 @@ class Reportes{
 	}
 	public function reportesPy()
 	{
-/* 		$sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
-		$sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'";
+		/* $sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
+		$sql="SELECT
+		DATE(m.fecha) AS fecha,
+		
+		p.idpro AS idinsumo,
+		m.cantidad AS cantidad,
+		m.tipomovimientoid
+		FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id
+		WHERE m.tipomovimientoid=2
+		";
+		/* $sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
 		/* $sql="SELECT DATE_FORMAT(m.fecha ,'%Y-%m-01') as fecha, m.productoid as idinsumo, SUM(m.cantidad) as cantidad FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE tp.nombre='Salida' GROUP BY m.productoid, DATE_FORMAT(m.fecha ,'%Y-%m-01') ORDER BY DATE_FORMAT(m.fecha ,'%Y-%m-01');"; */
 		return ejecutarConsulta($sql);		
+	}
+
+	public function reportesBarcodePy()
+	{
+		
+		/* $sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
+		$sql="SELECT producto.codigobarras as codigobarras,
+		producto.est_pro as estado,
+		categoria.nom_cat as categoria
+		FROM producto
+		INNER JOIN categoria ON producto.categoriaid = categoria.idcat AND categoria.idcat = producto.categoriaid";
+		/* $sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
+		/* $sql="SELECT DATE_FORMAT(m.fecha ,'%Y-%m-01') as fecha, m.productoid as idinsumo, SUM(m.cantidad) as cantidad FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE tp.nombre='Salida' GROUP BY m.productoid, DATE_FORMAT(m.fecha ,'%Y-%m-01') ORDER BY DATE_FORMAT(m.fecha ,'%Y-%m-01');"; */
+		$result = ejecutarConsulta($sql);
+
+		$file = fopen('../ajax/am_barcode.csv', 'w');
+		fputcsv($file, array("codigobarras", "estado", "categoria"));
+	
+		while ($row = mysqli_fetch_assoc($result)) {
+			fputcsv($file, $row);
+		}
+	
+		fclose($file);
+		return $result;
+	}
+
+	public function reportesPrediccionPy()
+	{
+		
+		/* $sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
+		$sql="SELECT DATE(m.fecha) AS fecha, p.idpro AS idinsumo, m.cantidad AS cantidad FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE m.tipomovimientoid=2;";
+		/* $sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
+		/* $sql="SELECT DATE_FORMAT(m.fecha ,'%Y-%m-01') as fecha, m.productoid as idinsumo, SUM(m.cantidad) as cantidad FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE tp.nombre='Salida' GROUP BY m.productoid, DATE_FORMAT(m.fecha ,'%Y-%m-01') ORDER BY DATE_FORMAT(m.fecha ,'%Y-%m-01');"; */
+		$result = ejecutarConsulta($sql);
+
+		$file = fopen('../ajax/am_confecciones.csv', 'w');
+		fputcsv($file, array("fecha", "idinsumo", "cantidad"));
+	
+		while ($row = mysqli_fetch_assoc($result)) {
+			fputcsv($file, $row);
+		}
+	
+		fclose($file);
+		return $result;
 	}
 	public function stockdeproductos()
 	{

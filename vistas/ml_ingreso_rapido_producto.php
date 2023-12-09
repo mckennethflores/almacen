@@ -22,8 +22,9 @@ require_once("header.php");
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Producto 
-                           <button class="btn btn-primary" id="btnagregarMl" onclick="mostrarformMl(true)"><i class="fa fa-plus-circle"></i> Agregar con ML</button></h1>
+                          <h1 class="box-title">Producto
+                            <div onclick="generarCsvBarcode()" id="generarCsv" class="btn btn-warning">Generar CSV para Barcode</div>
+                            <button class="btn btn-primary hidden" id="btnagregarMl" onclick="mostrarformMl(true)"><i class="fa fa-plus-circle"></i> Agregar con ML</button></h1>
                            <!-- <a class="btn btn-warning" target="_blank" href="../reportes/rptarticulos.php"> Reporte Articulos </a> -->
                         <div class="box-tools pull-right">
                         </div>
@@ -108,7 +109,7 @@ require_once("header.php");
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Codigo de barras(*):</label>
                             <input type="hidden" name="idpro" id="idpro">
-                            <input type="text" class="form-control" name="barcode_pro" id="barcode_pro" maxlength="250" placeholder="Barcode" >
+                            <input type="text" class="form-control" name="barcode_pro" id="barcode_pro" maxlength="20" placeholder="Barcode" >
                           </div>
                           <!-- <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Cantidad(*):</label>
@@ -127,6 +128,11 @@ require_once("header.php");
                             <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
                           </div>
                         </form>
+                    </div>
+                    <div id="divLoading">
+                      <div>
+                        <img src="../public/img/loading.svg" alt="Loading"> <span>Guardando el producto desde un codigo de barras ML</span>
+                      </div>
                     </div>
                     <!-- /formularioRegistroMl -->                    
                     <!--Fin centro -->

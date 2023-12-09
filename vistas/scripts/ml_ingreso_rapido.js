@@ -11,11 +11,10 @@ function init(){
 	})
 	$("#formularioMl").on("submit",function(e)
 	{
-		/* e.preventDefault();
-		console.log("comunicarme con python");
-		return; */
-		guardarConIa(e);	
-		//guardaryeditarMl(e);	
+		//e.preventDefault();
+		guardarConIa(e);
+
+		
 	})
 
 	$.post("../ajax/producto.php?op=selectCategoria", function(r){
@@ -152,7 +151,8 @@ function guardaryeditar(e)
 function guardarConIa(e)
 {
 	e.preventDefault();  // no activar la accion predeterminada del evento
-
+	var divLoading = document.querySelector("#divLoading");
+	divLoading.style.display = "flex";
 		//$("#btnGuardar").prop("disabled",true);
 		var formData = new FormData($("#formularioMl")[0]);
 		$.ajax({
@@ -164,13 +164,20 @@ function guardarConIa(e)
 
 			success: function(datos) //datos mensaje de archivo categoria ajax
 			{
+				var divLoading = document.querySelector("#divLoading");
+				divLoading.style.display = "none";
+				/* console.log(datos); */
+
+				$('#generarCsv').removeClass('hidden');
+				$('#generarCsv').addClass("active");
+
+				$('#btnagregarMl').addClass("hidden");
+				$('#generarCsv').removeClass('active');
 				bootbox.alert(datos);
 				mostrarform(false);
 				mostrarformMl(false);
 				tabla.ajax.reload();
-    /*             var array = JSON.parse(datos);  // Convertir la cadena JSON a un objeto JavaScript
-                console.log(array);  // Debería mostrar el array en la consola */
-				//$("#idpro").val(array.idpro);
+
 			}
 		});
 		limpiar();
@@ -242,5 +249,22 @@ function activar(idpro)
 	})
 }
 
-
+function generarCsvBarcode()
+{
+	bootbox.confirm("¿Está Seguro de generar el CSV?", function(result){
+		if(result)
+        {
+        	$.post("../ajax/reportes.php?op=reporte_barcode_py", {CSV : 1}, function(e){
+        		bootbox.alert(e);
+	            tabla.ajax.reload();
+/* 				var divLoading = document.querySelector("#btnagregarMl");
+				divLoading.style.display = "block"; */
+				$('#btnagregarMl').removeClass('hidden');
+				$('#btnagregarMl').addClass("active");
+				$('#generarCsv').addClass("hidden");
+				
+        	});	
+        }
+	})
+}
 init();

@@ -46,7 +46,7 @@ function generateMaterialsPrediction(){
 
 	
 		 
-	 })	
+	});
 }
 
 function limpiar()
@@ -241,4 +241,23 @@ function activar(idpro)
 }
 
 
+
+function generarCsvPrediccion()
+{
+	bootbox.confirm("¿Está Seguro de generar el CSV para predicción?", function(result){
+		if(result)
+        {
+        	$.post("../ajax/reportes.php?op=reporte_prediccion_py", {CSV : 1}, function(e){
+        		bootbox.alert(e);
+	            tabla.ajax.reload();
+/* 				var divLoading = document.querySelector("#btnagregarMl");
+				divLoading.style.display = "block"; */
+				$('#btnGMP').removeClass('hidden');
+				$('#btnGMP').addClass("active");
+				$('#generarCsv').addClass("hidden");
+				
+        	});	
+        }
+	})
+}
 init();

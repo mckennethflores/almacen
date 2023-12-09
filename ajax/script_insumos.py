@@ -3,32 +3,34 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import locale
 
-df = pd.read_csv('c:/xampp/htdocs/almacen/ajax/mesproductos_test.csv')
+#df = pd.read_csv('c:/xampp/htdocs/almacen/ajax/mesproductos_test.csv')
+df = pd.read_csv('c:/xampp/htdocs/almacen/ajax/am_confecciones.csv')
 
-# Cambia el idioma a español (puede variar dependiendo del sistema)
+
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
-# Asegúrate de que 'Fecha' sea un datetime
+# Convierto fecha a datatime para hacer los calculos (La fecha realmente se convierte a 
+# numeros para calcular, una fecha tal como esta no se puede calcular )
 df['fecha'] = pd.to_datetime(df['fecha'])
 
-# Crea un diccionario para renombrar los idinsumos
+
 idinsumo_dict = {1: "Telas", 2: "Botones", 3: "Etiquetas"}
 
 # Renombra los idinsumos
 df['idinsumo'] = df['idinsumo'].replace(idinsumo_dict)
 
-# Crea un gráfico para cada insumo
+# Crea una imagen para cada insumo
 for insumo in df['idinsumo'].unique():
-    # Filtra solo para el insumo actual
+    # Filtro solo para el insumo actual
     df_insumo = df[df['idinsumo'] == insumo]
 
-    # Asegúrate de que los datos estén ordenados por fecha
+    # Ordeno los datos por fecha
     df_insumo = df_insumo.sort_values('fecha')
 
-    # Configura 'Fecha' como el índice
+    # Configuro 'Fecha' como el índice
     df_insumo.set_index('fecha', inplace=True)
 
-    # Agrupa los datos por mes y suma las cantidades
+    # Agrupo los datos por mes y suma las cantidades
     df_insumo_mes = df_insumo.resample('M').sum()
 
     # Crea y entrena el modelo SARIMA

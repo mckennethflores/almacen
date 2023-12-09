@@ -12,30 +12,7 @@ require_once("header.php");
 if ($_SESSION['ml_insumos']==1)
 { */
 ?>
-<style>
-  /*Estilos login*/
-#divLoading{
-/* 	position: fixed; */
-	top: 0;
-	width: 100%;
-	height: 30%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: rgba(254,254,255, .65);
-	z-index: 9999;
-	display: none;
-}
-#divLoading img{
-	width: 50px;
-	height: 50px;
-}
-.required{
-	color: red;
-	font-size: 13pt;
-	font-weight: bold;
-}
-</style>
+
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">        
@@ -46,7 +23,10 @@ if ($_SESSION['ml_insumos']==1)
                   <div class="box">
                     <div class="box-header with-border">
                           <h1 class="box-title">Producto 
-                           <button class="btn btn-primary" id="btnGMP" onclick="generateMaterialsPrediction()"><i class="fa fa-plus-circle"></i> Generar predicciones para el 2024 con Machine Learning</button>
+                                                   
+                           <div onclick="generarCsvPrediccion()" id="generarCsv" class="btn btn-warning">Generar CSV predicción</div>
+                           <button class="btn btn-primary hidden" id="btnGMP" onclick="generateMaterialsPrediction()"><i class="fa fa-plus-circle"></i> Generar predicciones para el 2024 con Machine Learning</button>
+                            
                           </h1>
                            <a class="btn btn-warning hidden" id="seeReports" href="ml_predicciones_insumos.php"> Ver imagenes </a>
                         <div class="box-tools pull-right">
