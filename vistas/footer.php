@@ -29,6 +29,8 @@ var url = "<?= URL ?>";
 
     <script src="../public/js/bootbox.min.js"></script> 
     <script src="../public/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="../public/plugins/datetimepicker/jquery.datetimepicker.css">
+    <script src="../public/plugins/datetimepicker/jquery.datetimepicker.full.min.js"></script>
 
   </body>
 </html>

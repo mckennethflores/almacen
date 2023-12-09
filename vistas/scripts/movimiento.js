@@ -19,6 +19,12 @@ function init(){
 				$('#tipomovimientoid').selectpicker('refresh');
 	});
 	$("#imagenmuestra").hide();
+
+	$('#fecha').datetimepicker({
+			format:'Y-m-d H:i:s',
+			lang: 'es'
+	});
+
 }
  
 function limpiar()

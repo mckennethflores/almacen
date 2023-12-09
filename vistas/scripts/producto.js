@@ -127,15 +127,15 @@ function mostrar(idpro)
 		$("#idpro").val(data.idpro);
 		$("#categoriaid").val(data.categoriaid);
 	    $('#categoriaid').selectpicker('refresh');
-		$("#medidaid").val(data.medidaid);
-	    $('#medidaid').selectpicker('refresh');
+		$("#mediaid").val(data.mediaid);
+	    $('#mediaid').selectpicker('refresh');
         $("#nom_pro").val(data.nom_pro);
         $("#stock_pro").val(data.stock_pro);
         $("#pre_com_pro").val(data.pre_com_pro);
 		$("#pre_ven_pro").val(data.pre_ven_pro);
 		 
  
-		generarbarcode();
+		/* generarbarcode(); */
 	 })
 	 
 }

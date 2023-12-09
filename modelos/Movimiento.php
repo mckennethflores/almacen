@@ -25,8 +25,8 @@ class Movimiento
     {
 
         $sql ="UPDATE movimiento SET productoid='$productoid',tipomovimientoid='$tipomovimientoid',cantidad='$cantidad',
-        precio='$precio', '$fecha' WHERE idmov ='$idmov';";
-      // echo $sql;
+        precio='$precio', fecha='$fecha' WHERE idmov ='$idmov';";
+       //echo $sql;
       return ejecutarConsulta($sql);
     }
 

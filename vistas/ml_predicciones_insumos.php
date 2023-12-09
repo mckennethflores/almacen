@@ -46,7 +46,7 @@ if ($_SESSION['ml_insumos']==1)
                   <div class="box">
                     <div class="box-header with-border">
                           <h1 class="box-title">Producto 
-                           <button class="btn btn-primary" id="btnGMP" onclick="generateMaterialsPrediction()"><i class="fa fa-plus-circle"></i> Agregar con ML</button>
+                           <button class="btn btn-primary" id="btnGMP" onclick="generateMaterialsPrediction()"><i class="fa fa-plus-circle"></i> Generar predicciones para el 2024 con Machine Learning</button>
                           </h1>
                            <a class="btn btn-warning hidden" id="seeReports" href="ml_predicciones_insumos.php"> Ver imagenes </a>
                         <div class="box-tools pull-right">

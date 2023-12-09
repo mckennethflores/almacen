@@ -105,7 +105,7 @@ switch($_GET["op"]){
         //logina acceso
         $usu_us=$_POST['usu_us'];
         $cla_us=$_POST['cla_us'];
-        $rol_id_us=$_POST['rol_id_us'];
+        /* $rol_id_us=$_POST['rol_id_us']; */
 
         /* echo "rol ".$rol_id_us;
         
@@ -113,7 +113,7 @@ switch($_GET["op"]){
         
         $clavehash=hash("SHA256",$cla_us);
 
-        $rspta=$usuario->verificar($usu_us,$cla_us,$rol_id_us);
+        $rspta=$usuario->verificar($usu_us,$cla_us);
    
         $fetch=$rspta->fetch_object();
         

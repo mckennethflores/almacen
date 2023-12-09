@@ -88,5 +88,10 @@ class Inventario
 		";
 		return ejecutarConsulta($sql);		
 	}
+    public function rpt_vencimiento()
+	{
+		$sql="SELECT * FROM `producto`";
+		return ejecutarConsulta($sql);		
+	}
 }
 ?>

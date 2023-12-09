@@ -10,7 +10,7 @@ $tipomovimientoid = isset($_POST["tipomovimientoid"])? limpiarCadena($_POST["tip
 $cantidad = isset($_POST["cantidad"])? limpiarCadena($_POST["cantidad"]):"";
 $precio = isset($_POST["precio"])? limpiarCadena($_POST["precio"]):"";
 $fecha = isset($_POST["fecha"])? limpiarCadena($_POST["fecha"]):"";
-
+/* echo $fecha ; */
 
 
 //op significa Operacion
@@ -28,6 +28,7 @@ switch($_GET["op"])
         else
         {
             $rspta=$movimiento->editar($idmov,$productoid,$tipomovimientoid,$cantidad,$precio,$fecha);
+            //echo $rspta;
             echo $rspta ? "Artículo actualizado" : "Artículo no se pudo actualizar";
         }
     break;

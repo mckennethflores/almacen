@@ -12,20 +12,22 @@ $pre_com_pro = isset($_POST["pre_com_pro"])? limpiarCadena($_POST["pre_com_pro"]
 $pre_ven_pro = isset($_POST["pre_ven_pro"])? limpiarCadena($_POST["pre_ven_pro"]):"";
 $fec_pro = isset($_POST["fec_pro"])? limpiarCadena($_POST["fec_pro"]):"";
 $est_pro = isset($_POST["est_pro"])? limpiarCadena($_POST["est_pro"]):"";
+$codigobarras = isset($_POST["codigobarras"])? limpiarCadena($_POST["codigobarras"]):"";
 
-
+$barcode_pro = isset($_POST["barcode_pro"])? limpiarCadena($_POST["barcode_pro"]):"";
 //op significa Operacion
 switch($_GET["op"]){
     case 'guardaryeditar':
 
         if(empty($idpro)){
 
-            $rspta=$producto->insertar($categoriaid,$mediaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro);
+            $rspta=$producto->insertar($categoriaid,$mediaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro,$codigobarras);
          // echo $rspta;
          echo $rspta ? "Artículo registrado" : "Artículo no se pudo registrar";
         }
         else {
-            $rspta=$producto->editar($idpro,$categoriaid,$medidaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro);
+            $rspta=$producto->editar($idpro,$categoriaid,$mediaid,$nom_pro,$stock_pro,$pre_com_pro,$pre_ven_pro,$fec_pro,$codigobarras);
+            //echo $rspta;
             echo $rspta ? "Artículo actualizado" : "Artículo no se pudo actualizar";
         }
     break;
@@ -142,7 +144,14 @@ switch($_GET["op"]){
                 echo '<option value=' . $reg->idmedia . ' data-image="' .  $reg->cod_img . '">' .  $reg->imagen . '</option>';
             }
     break;
-    
+    case 'guardarConIa':
+
+        $command = escapeshellcmd('python script2.py ' . $barcode_pro);
+        $output = shell_exec($command);
+        
+        echo $output;
+        
+    break;
     case "selectArticulo":
         require_once "../modelos/Articulo.php";
         $producto = new Producto();

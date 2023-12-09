@@ -105,6 +105,46 @@ switch($_GET["op"]){
         echo json_encode($results);
     break;
 
+    case 'rpt_vencimiento':
+        $rspta=$inventario->rpt_vencimiento();
+        $data = Array();
+        $resultado_tecto = "";
+
+        function validacionVen($stockProducto,$stockMinimo){
+            $result = "";
+            if($stockProducto<=$stockMinimo){
+                $result .= "<span class='badge btn-danger'>Stock Insuficiente</span>";
+            }else if ($stockProducto <= 30 && $stockProducto >= 20){
+                $result .= "<span class='badge btn-warning'>Pronto sin Stock</span>";
+            }else{
+                $result .= "<span class='badge btn-success'>Activo</span>";
+            }
+            return $result; 
+        }
+        while ($reg=$rspta->fetch_object()){
+            (int)$stockProducto = $reg->stock_pro;
+            (int)$stockMinimo = $reg->stk_min_pro;
+            
+            
+            $data[]=array(
+                "0"=>$reg->idpro,
+                "1"=>$reg->nom_pro,
+                "2"=>$reg->fec_pro,
+                "3"=>$reg->stock_pro,
+                "4"=>validacionVen($stockProducto,$stockMinimo),
+                "5"=>$reg->codigobarras,
+                "6"=>$reg->pre_com_pro
+            );
+            
+        }
+        $results= array(
+            "sEcho"=>1, //info para datatables
+            "iTotalRecords"=>count($data),
+            "iTotalDisplayRecords"=>count($data),
+            "aaData"=>$data);
+        echo json_encode($results);
+    break;
+
     /* case "selectCategoria":
         require_once "../modelos/Categoria.php";
         $categoria = new Categoria();

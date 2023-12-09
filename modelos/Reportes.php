@@ -37,6 +37,13 @@ class Reportes{
 		$sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE DATE(m.fecha)>='$fecha_inicio' AND DATE(m.fecha)<='$fecha_fin'";
 		return ejecutarConsulta($sql);		
 	}
+	public function reportesPy()
+	{
+/* 		$sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'"; */
+		$sql="SELECT m.idmov as idmovimiento, p.nom_pro as producto, u.nom_us as usuario, tp.nombre as tipo, m.productoid, m.usuarioid, m.tipomovimientoid, m.cantidad, m.precio, DATE(m.fecha) as fecha FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id  WHERE tp.nombre='Salida'";
+		/* $sql="SELECT DATE_FORMAT(m.fecha ,'%Y-%m-01') as fecha, m.productoid as idinsumo, SUM(m.cantidad) as cantidad FROM movimiento m INNER JOIN producto p ON m.productoid = p.idpro INNER JOIN usuario u ON m.usuarioid = u.id INNER JOIN tipomovimiento tp ON m.tipomovimientoid = tp.id WHERE tp.nombre='Salida' GROUP BY m.productoid, DATE_FORMAT(m.fecha ,'%Y-%m-01') ORDER BY DATE_FORMAT(m.fecha ,'%Y-%m-01');"; */
+		return ejecutarConsulta($sql);		
+	}
 	public function stockdeproductos()
 	{
 		$sql="SELECT a.idpro,a.categoriaid,a.nom_pro as nombre,m.nom_med,m.nom_med as media, a.codigobarras,c.nom_cat as categoria,a.nom_pro,a.stock_pro,a.pre_com_pro,a.pre_ven_pro,a.fec_pro, a.est_pro FROM producto a INNER JOIN categoria c ON a.categoriaid=c.idcat INNER JOIN media m ON a.mediaid=m.idmed WHERE a.est_pro = '1' ORDER BY a.idpro ASC;";
@@ -44,7 +51,7 @@ class Reportes{
 	}
 
     
-	public function printCerradosPrimeraCita()
+	/* public function printCerradosPrimeraCita()
 	{
 		return $this->print('primera_cita');
 	}
@@ -72,9 +79,9 @@ class Reportes{
 	public function printMontoMes()
 	{
 		return $this->print('monto_mes');
-	}
+	} */
 
-	public function getDatosClientes()
+	/* public function getDatosClientes()
 	{
 		if ($this->idRol == ROL_ADMINISTRADOR) {
 			$sql = "SELECT R.id as idReunion, R.nom_re as Nombre_Reunion, A.valor as Estado_Reunion, R.fec_actualizacion_reu as fechaModificacion, R.cos_re as Costo_Reunion FROM reuniones R, auxiliar A WHERE R.id_eta_re = A.id ORDER BY R.fec_actualizacion_reu ASC";
@@ -188,5 +195,5 @@ class Reportes{
 
 		return ejecutarConsulta($sql);
 
-	}
+	} */
 }

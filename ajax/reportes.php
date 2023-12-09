@@ -10,19 +10,53 @@ $reportes = new Reportes();
             $fecha_inicio=$_REQUEST["fecha_inicio"];
             $fecha_fin=$_REQUEST["fecha_fin"];
     
-            $rspta=$reportes->movimientosfecha($fecha_inicio,$fecha_fin);
+            $rspta=$reportes->reportesPy($fecha_inicio,$fecha_fin);
              //Vamos a declarar un array
              $data= Array();
     
              while ($reg=$rspta->fetch_object()){
                     $data[]=array(
                         "0"=>$reg->fecha,
-                        "1"=>$reg->producto,
-                        "2"=>$reg->usuario,
+                        "1"=>$reg->productoid,
+                        "2"=>$reg->cantidad,
                         "3"=>$reg->tipo,
                         "4"=>$reg->producto,
                         "5"=>$reg->cantidad,
                         "6"=>$reg->precio
+                        );
+             }
+             $results = array(
+                 "sEcho"=>1, //Información para el datatables
+                 "iTotalRecords"=>count($data), //enviamos el total registros al datatable
+                 "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+                 "aaData"=>$data);
+             echo json_encode($results);
+    
+        break;
+
+        case 'reporte_py':
+         /*    $fecha_inicio=$_REQUEST["fecha_inicio"];
+            $fecha_fin=$_REQUEST["fecha_fin"]; */
+    
+            
+            $rspta=$reportes->reportesPy();
+            
+
+             //Vamos a declarar un array
+             $data= Array();
+             $filename = '../ajax/miArchivo.csv';
+             $fp = fopen($filename, 'w');
+                foreach ($rspta as $row)
+                {
+                    fputcsv($fp, $row);
+                }
+            fclose($fp);
+             
+             while ($reg=$rspta->fetch_object()){
+                    $data[]=array(
+                        "0"=>$reg->fecha,
+                        "1"=>$reg->idinsumo,
+                        "2"=>$reg->cantidad
                         );
              }
              $results = array(

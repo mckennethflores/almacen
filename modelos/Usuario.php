@@ -189,9 +189,9 @@ class Usuario{
         return ejecutarConsulta($sql);
     } */
 
-    public function verificar($usu_us,$cla_us,$rol_id_us)
+    public function verificar($usu_us,$cla_us)
     {
-		$sql="SELECT * FROM usuario WHERE usu_us='$usu_us' AND cla_us='$cla_us' AND rol_id_us='$rol_id_us' AND con_us='1'";
+		$sql="SELECT * FROM usuario WHERE usu_us='$usu_us' AND cla_us='$cla_us' AND con_us='1'";
         //echo $sql; return;
         return ejecutarConsulta($sql);
     }

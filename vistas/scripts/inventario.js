@@ -5,6 +5,7 @@ function init(){
 	listar();
 	listar_exactitud();
 	listar_kardex();
+	listar_vencimiento();
 	$("#formulario").on("submit",function(e)
 	{
 		guardaryeditar(e);	
@@ -133,6 +134,36 @@ function listar_kardex(){
 		"ajax":
 			{
 				url: '../ajax/inventario.php?op=rpt_kardex',
+				type: "get",
+				dataType: "json",
+				error: function (e){
+					console.log(e.responseText);
+				}
+			},
+		"bDestroy": true,
+		"iDisplayLength": 25, // Paginacion c/ cuantos registros
+		"order": [[ 0, "asc" ]] // Ordenar data
+	}).DataTable();
+
+}
+
+function listar_vencimiento(){
+ 
+	tabla=$('#tbllistado_vencimiento').dataTable(
+	{
+		"aProcessing": true,
+		"aServerSide": true,
+		dom: 'Bfrtip',
+		buttons:	[
+			'copyHtml5',
+			'excelHtml5',
+			'csvHtml5',
+			'pdf'
+		],
+		                
+		"ajax":
+			{
+				url: '../ajax/inventario.php?op=rpt_vencimiento',
 				type: "get",
 				dataType: "json",
 				error: function (e){

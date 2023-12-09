@@ -198,7 +198,7 @@ function mostrar(idpro)
 		$("#pre_ven_pro").val(data.pre_ven_pro);
 		 
  
-		generarbarcode();
+		/* generarbarcode(); */
 	 })
 	 
 }

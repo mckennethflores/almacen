@@ -34,6 +34,9 @@ if (strlen(session_id()) < 1)
     <link rel="stylesheet" type="text/css" href="../public/css/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="../public/css/style_personalizado.css">
  
+
+
+
 <style>
 
 </style>
@@ -185,8 +188,8 @@ $menus = $permiso->listar();
                 <li><a href="categoria.php"><i class="fa fa-circle-o"></i>Categorías</a></li>
                 <li><a href="media.php"><i class="fa fa-circle-o"></i>Media</a></li>
                 <li><a href="producto_nombre.php"><i class="fa fa-circle-o"></i>Productos</a></li>
-               <!--  <li><a href="proveedores.php"><i class="fa fa-circle-o"></i>Proveedores</a></li>
-                <li><a href="clientes.php"><i class="fa fa-circle-o"></i>Clientes</a></li> -->
+               <li><a href="proveedores.php"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                <li><a href="clientes.php"><i class="fa fa-circle-o"></i>Clientes</a></li> 
               </ul>
             </li> -->
 

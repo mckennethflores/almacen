@@ -93,6 +93,10 @@ require_once("header.php");
                             <label>Fecha:</label>
                             <input type="datetime" class="form-control" name="fec_pro" id="fec_pro" >
                           </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Codigo de barras:</label>
+                            <input type="text" class="form-control" name="codigobarras" id="codigobarras" maxlength="13" required>
+                          </div>
                           
                            
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
